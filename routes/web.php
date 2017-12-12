@@ -21,6 +21,10 @@ Route::get('producao/{id}/periodo/{ano}', 'ProductionController@showData')->midd
 Route::get('producao/{id}/periodo/{ano}/{mes}', 'ProductionController@showData')->middleware('auth');
 Route::get('producao/intermediacao/{idintermediation}', 'ProductionController@getIntermediation')->middleware('auth');
 
+
+Route::post('insert/productivities', 'ProductionController@insert')->middleware('auth');
+Route::post('delete/productivities/{id}', 'ProductionController@delete')->middleware('auth');
+
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
 });

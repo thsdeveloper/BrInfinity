@@ -20,6 +20,7 @@ Vue.use(ElementUI, {locale})
  */
 
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
+Vue.component('table-producao', require('./components/TableProducao.vue'));
 
 const app = new Vue({
     el: '#app'
