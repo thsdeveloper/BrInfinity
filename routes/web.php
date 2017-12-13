@@ -20,10 +20,14 @@ Route::get('producao/{id}', 'ProductionController@show')->middleware('auth');
 Route::get('producao/{id}/periodo/{ano}', 'ProductionController@showData')->middleware('auth');
 Route::get('producao/{id}/periodo/{ano}/{mes}', 'ProductionController@showData')->middleware('auth');
 Route::get('producao/intermediacao/{idintermediation}', 'ProductionController@getIntermediation')->middleware('auth');
-
-
 Route::post('insert/productivities', 'ProductionController@insert')->middleware('auth');
 Route::post('delete/productivities/{id}', 'ProductionController@delete')->middleware('auth');
+
+Route::get('cotacao', 'QuotationController@index')->middleware('auth');
+Route::post('insert/quotation', 'QuotationController@insert')->middleware('auth');
+Route::post('delete/quotation/{id}', 'QuotationController@delete')->middleware('auth');
+Route::post('update/quotation', 'QuotationController@update')->middleware('auth');
+
 
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();

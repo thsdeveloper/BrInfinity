@@ -57,9 +57,10 @@
 
                                 <ul class="dropdown-menu">
                                     @if($checkAdmin)
-                                      <li><a href="{{ url('/producao/') }}">Produção Geral</a></li>
+                                      <li><a href="{{ url('producao') }}">Produção Geral</a></li>
                                     @endif
-                                    <li><a href="{{ url('/producao/') }}/{{ Auth::user()->id }}">Produção</a></li>
+                                    <li><a href="{{ url('cotacao') }}">Cotação</a></li>
+                                    <li><a href="{{ url('producao') }}/{{ Auth::user()->id }}">Produção</a></li>
 
                                     <li>
                                         <a href="{{ route('logout') }}"
@@ -79,7 +80,7 @@
                 </div>
             </div>
         </nav>
-        <div class="container">
+        <div class="container-fluid">
             <div class="title m-b-md">
                 <h2>@yield('title')</h2>
             </div>
