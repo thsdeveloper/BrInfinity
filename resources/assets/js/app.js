@@ -1,9 +1,9 @@
 
 /**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
+* First we will load all of this project's JavaScript dependencies which
+* includes Vue and other libraries. It is a great starting point when
+* building robust, powerful web applications using Vue and Laravel.
+*/
 
 require('./bootstrap');
 
@@ -13,17 +13,24 @@ import ElementUI from 'element-ui'
 import locale from 'element-ui/lib/locale/lang/pt-br'
 Vue.use(ElementUI, {locale})
 
+// chartjs package
+require('chart.js');
+// vue-charts package
+require('hchs-vue-charts');
+Vue.use(VueCharts);
+
 /**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+* Next, we will create a fresh Vue application instance and attach it to
+* the page. Then, you may begin adding components to this application
+* or customize the JavaScript scaffolding to fit your unique needs.
+*/
 
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
 Vue.component('table-producao', require('./components/TableProducao.vue'));
 
 Vue.component('quotation-brinfinty', require('./components/Quotation.vue'));
+Vue.component('report-brinfinty', require('./components/Report.vue'));
 
 const app = new Vue({
-    el: '#app'
+  el: '#app'
 });
