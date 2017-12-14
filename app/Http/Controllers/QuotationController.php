@@ -61,15 +61,66 @@ class QuotationController extends Controller{
     return $retorno;
   }
 
+  public function updateStatus(Request $request){
+    $id = $request->input('id');
+    $text_status = $request->input('text_status');
+    $status = $request->input('status');
+
+    $quotation = Quotation::find($id);
+    $quotation->text_status = $text_status;
+    $quotation->status = $status;
+
+    if($quotation->save()){
+      return 'Sucesso';
+    }else{
+      return 'Deu erro';
+    }
+  }
+
   public function update(Request $request){
     $id = $request->input('id');
     $text_status = $request->input('text_status');
     $status = $request->input('status');
 
 
-  $quotation = Quotation::find($id);
+    $date_solicitation = $request->input('date_solicitation');
+    $proponent = $request->input('proponent');
+    $cpf = $request->input('cpf');
+    $industry = $request->input('industry');
+    $description = $request->input('description');
+    $value = $request->input('value');
+    $id_insurer = $request->input('id_insurer');
+    $id_brokerage = $request->input('id_brokerage');
+    $id_user = $request->input('id_user');
+    $id_business = $request->input('id_business');
+    $validity = $request->input('validity');
+    $congenere = $request->input('congenere');
+    $last_value = $request->input('last_value');
+    $comission = $request->input('comission');
+    $idStatus = $request->input('idStatus');
+
+
+
+    $quotation = Quotation::find($id);
     $quotation->text_status = $text_status;
     $quotation->status = $status;
+
+    $quotation->date_solicitation = $date_solicitation;
+    $quotation->proponent = $proponent;
+    $quotation->cpf = $cpf;
+    $quotation->industry = $industry;
+    $quotation->description = $description;
+    $quotation->value = $value;
+    $quotation->id_insurer = $id_insurer;
+    $quotation->id_brokerage = $id_brokerage;
+    $quotation->id_user = $id_user;
+    $quotation->id_business = $id_business;
+    $quotation->validity = $validity;
+    $quotation->congenere = $congenere;
+    $quotation->last_value = $last_value;
+    $quotation->comission = $comission;
+
+    $quotation->status = $idStatus;
 
     if($quotation->save()){
       return 'Sucesso';

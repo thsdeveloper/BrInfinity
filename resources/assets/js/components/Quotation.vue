@@ -31,22 +31,41 @@
           <el-table-column prop="validity" label="Prazo (dias)"></el-table-column>
 
           <el-table-column prop="validity" label="Status da cotação" width="250">
-            <template slot-scope="scope">
-              <el-tag type="info">Em negociação</el-tag>
 
-              <el-tooltip class="item" effect="dark" content="Definir como fechado" placement="top">
-                <el-button type="success" icon="el-icon-check" size="mini" @click="handleConfirmed(scope.$index, scope.row)"></el-button>
+            <template slot-scope="scope">
+
+              <el-tag type="info" v-show="scope.row.status == 0">Em negociação</el-tag>
+              <el-tooltip class="item" effect="dark" content="Definir como fechado" placement="top" v-show="scope.row.status == 0">
+                <el-button icon="el-icon-check" size="mini" @click="handleConfirmed(scope.$index, scope.row)"></el-button>
               </el-tooltip>
-              <el-tooltip class="item" effect="dark" content="Definir como não fechado" placement="top">
-                <el-button type="danger" icon="el-icon-circle-close-outline" size="mini" @click="handleConfirmed(scope.$index, scope.row)"></el-button>
+              <el-tooltip class="item" effect="dark" content="Definir como não fechado" placement="top" v-show="scope.row.status == 0">
+                <el-button icon="el-icon-circle-close-outline" size="mini" @click="handleNoConfirmed(scope.$index, scope.row)"></el-button>
               </el-tooltip>
+
+
+              <el-tooltip class="item" effect="dark" :content="scope.row.text_status" placement="top" v-show="scope.row.status == 1">
+                <el-tag type="success" v-show="scope.row.status == 1">Cotação Fechada</el-tag>
+              </el-tooltip>
+              <el-tooltip class="item" effect="dark" content="Definir como: 'Em negociação'" placement="top" v-show="scope.row.status == 1">
+                <el-button icon="el-icon-refresh" size="mini" @click="handleNegociacao(scope.$index, scope.row)"></el-button>
+              </el-tooltip>
+
+
+              <el-tooltip class="item" effect="dark" :content="scope.row.text_status" placement="top" v-show="scope.row.status == 2">
+                <el-tag type="danger" v-show="scope.row.status == 2">Não fechado</el-tag>
+              </el-tooltip>
+              <el-tooltip class="item" effect="dark" content="Definir como: 'Em negociação'" placement="top" v-show="scope.row.status == 2">
+                <el-button icon="el-icon-refresh" size="mini" @click="handleNegociacao(scope.$index, scope.row)"></el-button>
+              </el-tooltip>
+
 
             </template>
+
           </el-table-column>
 
           <el-table-column fixed="right" label="Operações" width="220">
             <template slot-scope="scope">
-              <el-button type="primary" plain size="small" icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)">Editar</el-button>
+              <el-button type="primary" plain size="small" icon="el-icon-edit" @click="editQuotation(scope.$index, scope.row)">Editar</el-button>
               <el-button type="danger" plain size="small" icon="el-icon-delete" @click="handleDelete(scope.$index, scope.row.id)">Excluir</el-button>
             </template>
           </el-table-column>
@@ -95,6 +114,29 @@
               </el-col>
             </el-row>
 
+            <el-row :gutter="20" v-if="this.lineUpdate === true">
+              <el-col :span="6">
+                <el-form-item prop="validity">
+                  <el-date-picker v-model="ruleForm.validity" type="date" placeholder="Data da vigência"></el-date-picker>
+                </el-form-item>
+              </el-col>
+              <el-col :span="6">
+                <el-form-item prop="congenere">
+                  <el-input v-model="ruleForm.congenere" placeholder="Congenere"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="6">
+                <el-form-item prop="last_value">
+                  <el-input v-model="ruleForm.last_value" placeholder="Preço pago ano Passado"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="6">
+                <el-form-item prop="comission">
+                  <el-input v-model="ruleForm.comission" placeholder="Comissão"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+
             <el-row :gutter="20">
               <el-col :span="12">
                 <el-form-item prop="id_insurer">
@@ -125,18 +167,17 @@
             <el-row :gutter="20">
               <el-col :span="24">
                 <el-form-item>
-                  <el-button type="primary" @click="submitForm('ruleForm')" v-loading.fullscreen.lock="fullscreenLoading" element-loading-text="Aguarde! Estamos salvando a nova cotação...">Salvar</el-button>
+                  <el-button type="primary" @click="submitForm('ruleForm', lineUpdate)" v-loading.fullscreen.lock="fullscreenLoading" element-loading-text="Aguarde! Estamos salvando a nova cotação...">Salvar</el-button>
                   <el-button @click="resetForm('ruleForm')">Limpar</el-button>
                 </el-form-item>
               </el-col>
             </el-row>
 
 
-
           </el-form>
         </el-dialog>
 
-        <el-dialog title="Status da cotação" :visible.sync="dialogStatus" width="60%">
+        <el-dialog title="Status da cotação" :visible.sync="dialogStatus" width="40%">
           <el-form :model="ruleFormStatus" :rules="rules" ref="ruleFormStatus">
             <el-row :gutter="20">
               <el-col :span="24">
@@ -149,7 +190,6 @@
               <el-col :span="24">
                 <el-form-item>
                   <el-button type="primary" @click="submitFormStatus('ruleFormStatus')" v-loading.fullscreen.lock="fullscreenLoading" element-loading-text="Aguarde! Estamos salvando o status...">Salvar</el-button>
-                  <el-button @click="resetForm('ruleForm')">Limpar</el-button>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -172,6 +212,8 @@ export default {
 
       //Id da Quotacao
       idQ: '',
+      idStatus: '',
+      lineUpdate: false,
 
       //Loading
       fullscreenLoading: false,
@@ -187,6 +229,12 @@ export default {
         id_insurer: '',
         value: '',
         id_brokerage: '',
+
+        //Campos para update
+        validity: '',
+        congenere: '',
+        last_value: '',
+        comission: '',
       },
 
       ruleFormStatus:{
@@ -227,9 +275,47 @@ export default {
     }
   },
   methods: {
+    editQuotation(index, row){
+      var _this = this;
+
+      this.idQ = row.id;
+      this.idStatus = row.status;
+
+      _this.lineUpdate = true;
+      _this.dialogQuotation = true;
+
+
+      _this.ruleForm.date_solicitation = row.date_solicitation;
+      _this.ruleForm.proponent = row.proponent;
+      _this.ruleForm.cpf = row.cpf;
+      _this.ruleForm.industry = row.industry;
+      _this.ruleForm.description = row.description;
+      _this.ruleForm.id_business = row.id_business;
+      _this.ruleForm.id_insurer = row.id_insurer;
+      _this.ruleForm.value = row.value;
+      _this.ruleForm.id_brokerage = row.id_brokerage;
+
+      //Update
+      _this.ruleForm.validity = row.validity;
+      _this.ruleForm.congenere = row.congenere;
+      _this.ruleForm.last_value = row.last_value;
+      _this.ruleForm.comission = row.comission;
+
+    },
     handleConfirmed(index, row){
       this.dialogStatus = true;
       this.idQ = row.id;
+      this.idStatus = "1";
+    },
+    handleNoConfirmed(index, row){
+      this.dialogStatus = true;
+      this.idQ = row.id;
+      this.idStatus = "2";
+    },
+    handleNegociacao(index, row){
+      this.dialogStatus = true;
+      this.idQ = row.id;
+      this.idStatus = "0";
     },
     handleDelete(index, id) {
       console.log(index, id);
@@ -280,10 +366,10 @@ export default {
           _this.fullscreenLoading = true;
           setTimeout(() => {
 
-            axios.post('update/quotation/', {
+            axios.post('update/quotation/status', {
               id: _this.idQ,
               text_status: this.ruleFormStatus.text_status,
-              status: "2",
+              status: this.idStatus,
             }).then(function (response) {
               _this.fullscreenLoading = false;
               window.location.href = "/backend/cotacao";
@@ -298,34 +384,73 @@ export default {
         }
       });
     },
-    submitForm(formName) {
+    submitForm(formName, update) {
       var _this = this;
+
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          console.log(this.ruleForm);
 
           _this.fullscreenLoading = true;
           setTimeout(() => {
 
-            axios.post('insert/quotation', {
-              date_solicitation: this.ruleForm.date_solicitation,
-              proponent: this.ruleForm.proponent,
-              cpf: this.ruleForm.cpf,
-              industry: this.ruleForm.industry,
-              description: this.ruleForm.description,
-              value: this.ruleForm.value,
-              id_insurer: this.ruleForm.id_insurer,
-              id_brokerage: this.ruleForm.id_brokerage,
-              id_user: this.user.id,
-              id_business: this.ruleForm.id_business,
-            }).then(function (response) {
-              _this.fullscreenLoading = false;
-              window.location.href = "/backend/cotacao";
-              console.log(response);
-            }).catch(function (error) {
-              console.log(error);
-            });
+            if(update === false){
+              console.log('Update? '+update);
+              axios.post('insert/quotation', {
+                date_solicitation: this.ruleForm.date_solicitation,
+                proponent: this.ruleForm.proponent,
+                cpf: this.ruleForm.cpf,
+                industry: this.ruleForm.industry,
+                description: this.ruleForm.description,
+                value: this.ruleForm.value,
+                id_insurer: this.ruleForm.id_insurer,
+                id_brokerage: this.ruleForm.id_brokerage,
+                id_user: this.user.id,
+                id_business: this.ruleForm.id_business,
 
+                //update
+                validity: this.ruleForm.validity,
+                congenere: this.ruleForm.congenere,
+                last_value: this.ruleForm.last_value,
+                comission: this.ruleForm.comission,
+
+              }).then(function (response) {
+                _this.fullscreenLoading = false;
+                window.location.href = "/backend/cotacao";
+                console.log(response);
+              }).catch(function (error) {
+                console.log(error);
+              });
+            }else{
+              axios.post('update/quotation/', {
+                id: _this.idQ,
+
+                idStatus: this.idStatus,
+
+                date_solicitation: this.ruleForm.date_solicitation,
+                proponent: this.ruleForm.proponent,
+                cpf: this.ruleForm.cpf,
+                industry: this.ruleForm.industry,
+                description: this.ruleForm.description,
+                value: this.ruleForm.value,
+                id_insurer: this.ruleForm.id_insurer,
+                id_brokerage: this.ruleForm.id_brokerage,
+                id_user: this.user.id,
+                id_business: this.ruleForm.id_business,
+
+                //update
+                validity: this.ruleForm.validity,
+                congenere: this.ruleForm.congenere,
+                last_value: this.ruleForm.last_value,
+                comission: this.ruleForm.comission,
+
+              }).then(function (response) {
+                _this.fullscreenLoading = false;
+                window.location.href = "/backend/cotacao";
+                console.log(response);
+              }).catch(function (error) {
+                console.log(error);
+              });
+            }
 
           }, 4000);
 

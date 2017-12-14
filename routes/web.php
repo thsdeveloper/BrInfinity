@@ -27,6 +27,8 @@ Route::get('cotacao', 'QuotationController@index')->middleware('auth');
 Route::post('insert/quotation', 'QuotationController@insert')->middleware('auth');
 Route::post('delete/quotation/{id}', 'QuotationController@delete')->middleware('auth');
 Route::post('update/quotation', 'QuotationController@update')->middleware('auth');
+Route::post('update/quotation/status', 'QuotationController@updateStatus')->middleware('auth');
+
 
 
 Route::group(['prefix' => 'admin'], function () {
