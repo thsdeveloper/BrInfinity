@@ -16076,6 +16076,7 @@ Vue.component('table-producao', __webpack_require__(184));
 Vue.component('quotation-brinfinty', __webpack_require__(190));
 Vue.component('report-brinfinty', __webpack_require__(377));
 Vue.component('report-table', __webpack_require__(380));
+Vue.component('report-table-mensal', __webpack_require__(383));
 
 var app = new Vue({
   el: '#app'
@@ -87214,27 +87215,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   },
 
   methods: {
-    excluirProductivities: function excluirProductivities() {
-      var _this2 = this;
-
+    excluirProductivities: function excluirProductivities(id) {
+      var _this = this;
+      console.log('Id da Pro:' + id);
       this.$confirm('Deseja realmente excluir este registro?', 'Excluir este registro?', {
         confirmButtonText: 'Sim',
         cancelButtonText: 'Não',
         type: 'info'
       }).then(function () {
-
         //Deletar os registros
         axios.post('delete/productivities/' + id).then(function (response) {
           console.log('Retorno do delete: ' + response.data);
-          this.$message({
+          _this.$message({
             type: 'success',
             message: 'Registro deletado com sucesso!'
           });
+          window.location.href = "/backend/producao";
         }).catch(function (error) {
           console.log(error);
         });
       }).catch(function () {
-        _this2.$message({
+        _this.$message({
           type: 'info',
           message: 'Operação cancelada!'
         });
@@ -87250,6 +87251,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         data: this.ruleForm.dateInput,
         valor: this.ruleForm.valorInput
       }).then(function (response) {
+        window.location.href = "/backend/producao";
         console.log('Retorno do insert: ' + response.data);
       }).catch(function (error) {
         console.log(error);
@@ -87468,7 +87470,7 @@ var render = function() {
                                           },
                                           on: {
                                             click: function($event) {
-                                              _vm.excluirProductivities()
+                                              _vm.excluirProductivities(row.id)
                                             }
                                           }
                                         },
@@ -119437,17 +119439,38 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['dados'],
   data: function data() {
     return {
+      dialogVisible: false,
       meses: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
       data: [50, 90, 50, 90, 50, 90, 50, 100, 40, 232, 40, 567]
     };
   },
 
-  methods: {},
+  methods: {
+    handleClose: function handleClose(done) {
+      this.$confirm('Deseja fechar o gráfico?').then(function (_) {
+        done();
+      }).catch(function (_) {});
+    }
+  },
   mounted: function mounted() {}
 });
 
@@ -119463,21 +119486,55 @@ var render = function() {
     "div",
     { staticClass: "report-brinfinite" },
     [
-      _c("canvas", { attrs: { id: "mycanvas2", count: "2" } }),
-      _vm._v(" "),
-      _vm._l(this.dados, function(row, index) {
-        return _c("chartjs-bar", {
-          key: index,
-          attrs: {
-            target: "mycanvas2",
-            labels: _vm.meses,
-            datalabel: row.seguradora,
-            data: row.valores
+      _c(
+        "el-button",
+        {
+          staticClass: "pull-right",
+          attrs: { type: "primary", icon: "el-icon-document" },
+          on: {
+            click: function($event) {
+              _vm.dialogVisible = true
+            }
           }
-        })
-      })
+        },
+        [_vm._v("Visualizar o gráfico")]
+      ),
+      _vm._v(" "),
+      _c(
+        "el-dialog",
+        {
+          attrs: {
+            title: "Gráfico Anual",
+            visible: _vm.dialogVisible,
+            width: "80%",
+            "before-close": _vm.handleClose,
+            top: "10px"
+          },
+          on: {
+            "update:visible": function($event) {
+              _vm.dialogVisible = $event
+            }
+          }
+        },
+        [
+          _c("canvas", { attrs: { id: "mycanvas2", count: "2" } }),
+          _vm._v(" "),
+          _vm._l(this.dados, function(row, index) {
+            return _c("chartjs-bar", {
+              key: index,
+              attrs: {
+                target: "mycanvas2",
+                labels: _vm.meses,
+                datalabel: row.seguradora,
+                data: row.valores
+              }
+            })
+          })
+        ],
+        2
+      )
     ],
-    2
+    1
   )
 }
 var staticRenderFns = []
@@ -119639,6 +119696,157 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-5c1d7d93", module.exports)
+  }
+}
+
+/***/ }),
+/* 383 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(46)
+/* script */
+var __vue_script__ = __webpack_require__(384)
+/* template */
+var __vue_template__ = __webpack_require__(385)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/ReportTableMensal.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-52d6cbbb", Component.options)
+  } else {
+    hotAPI.reload("data-v-52d6cbbb", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 384 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['dados', 'seguradoras'],
+  data: function data() {
+    return {};
+  },
+
+  methods: {},
+  mounted: function mounted() {}
+});
+
+/***/ }),
+/* 385 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "report-table-mensal" },
+    _vm._l(this.seguradoras, function(row, index) {
+      return _c("div", { key: index, staticClass: "col-md-4" }, [
+        _c("div", { staticClass: "panel panel-default" }, [
+          _c("div", { staticClass: "panel-heading" }, [
+            _c("h3", { staticClass: "panel-title text-center" }, [
+              _vm._v(_vm._s(row.name))
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "panel-body" },
+            [
+              _c(
+                "el-table",
+                { staticStyle: { width: "100%" }, attrs: { data: _vm.dados } },
+                [
+                  _c("el-table-column", {
+                    attrs: { prop: "date", label: "Dia" }
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: { prop: "value", label: "Aculumado" }
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: { prop: "value", label: "Produção do dia" }
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ])
+      ])
+    })
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-52d6cbbb", module.exports)
   }
 }
 

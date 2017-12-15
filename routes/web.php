@@ -30,6 +30,7 @@ Route::post('update/quotation', 'QuotationController@update')->middleware('auth'
 Route::post('update/quotation/status', 'QuotationController@updateStatus')->middleware('auth');
 
 Route::get('relatorio', 'ReportController@index')->middleware('auth');
+Route::get('relatorio/mensal', 'ReportController@mensal')->middleware('auth');
 Route::get('relatorio/{id}/periodo/{ano}', 'ReportController@showData')->middleware('auth');
 
 

@@ -61,6 +61,7 @@
                                   @if($checkAdmin)
                                     <li><a href="{{ url('producao') }}">Geral</a></li>
                                     <li><a href="{{ url('relatorio') }}">Relatório Anual</a></li>
+                                      <li><a href="{{ url('relatorio/mensal') }}">Relatório Mêsal</a></li>
                                   @endif
                               </ul>
                           </li>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Productivity;
 use App\Intermediation;
+use App\Insurer;
 
 class ReportController extends Controller{
 
@@ -20,6 +21,17 @@ class ReportController extends Controller{
     //dd($retorno);
 
     return view('report.index', ['retorno' => $retorno, 'table' => $table]);
+  }
+
+
+  public function mensal(){
+
+    $productivity = Productivity::with('intermidations.insurer')->orderBy('date')->get();
+    $insurer = Insurer::get();
+
+
+    //var_dump($productivity);
+    return view('report.mensal', ['retorno' => $productivity, 'seguradoras' => $insurer]);
   }
 
   static function getReportYear($productivity, $intermediation){

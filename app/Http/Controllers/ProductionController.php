@@ -137,7 +137,7 @@ class ProductionController extends Controller
       ->where('intermediations.id', '=', $idintermediation)
       //->where('productivities.date', '>=', $datemin)
       //->where('productivities.date', '<=', $datemax)
-      ->get(array('productivities.date as productivities_data','users.name as users_name', 'brokerages.name as brokerages_name', 'insurers.name as insurers_name', 'productivities.value as productivities_value'));
+      ->get(array('productivities.date as productivities_data','users.name as users_name', 'brokerages.name as brokerages_name', 'insurers.name as insurers_name', 'productivities.value as productivities_value', 'productivities.id as id'));
 
       $relation = DB::table('intermediations')
       ->join('insurers', 'insurers.id', '=', 'intermediations.id_insurer')

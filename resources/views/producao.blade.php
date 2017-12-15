@@ -84,24 +84,42 @@
         @endif
       </div>
 
-      <!-- Modal -->
-      <div class="modal fade" id="myModal" role="dialog">
-        <div class="modal-dialog">
+      <script>
+    $(document).ready(function(){
 
-          <!-- Modal content-->
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-              <h4 class="modal-title">Produção</h4>
-            </div>
-            <div class="modal-body">
+      $( ".btn-intermediations" ).click(function() {
+        var intermediations_id = $(this).attr( "intermediations_id" );
+        $.get( "{{ url('/producao/intermediacao/') }}/"+intermediations_id )
+        .done(function( data ) {
+          console.log(data);
+          $( "#myModal .modal-body" ).after( data );
+        });
+      });
 
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-          </div>
+      $("#myInput").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#producao tr").filter(function() {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+      });
 
-        </div>
-      </div>
+      $( ".select-date" ).change(function() {
+        if($(this).val() != 'todos'){
+          var url = "{{ url('/producao/') }}/"+$("#select_user").val()+"/periodo/"+$(this).val();
+        }else{
+          var url = "{{ url('/producao/') }}/"+$("#select_user").val();
+        }
+        window.location = url;
+      });
+
+      $( ".select-user" ).change(function() {
+        if($(this).val() != 'todos'){
+          var url = "{{ url('/producao/') }}/"+$(this).val();
+        }else{
+          var url = "{{ url('/producao/') }}";
+        }
+        window.location = url;
+      });
+    });
+  </script>
     @stop

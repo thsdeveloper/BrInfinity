@@ -43,7 +43,7 @@
             fixed="right"
             label="Ações">
             <template slot-scope="scope">
-              <el-button type="text" size="small" @click="excluirProductivities()" icon="el-icon-delete">Excluir</el-button>
+              <el-button type="text" size="small" @click="excluirProductivities(row.id)" icon="el-icon-delete">Excluir</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -96,25 +96,27 @@ export default {
     }
   },
   methods: {
-    excluirProductivities(){
+    excluirProductivities(id){
+      var _this = this;
+      console.log('Id da Pro:'+id);
       this.$confirm('Deseja realmente excluir este registro?', 'Excluir este registro?', {
         confirmButtonText: 'Sim',
         cancelButtonText: 'Não',
         type: 'info'
       }).then(() => {
-
         //Deletar os registros
         axios.post('delete/productivities/'+id).then(function (response) {
           console.log('Retorno do delete: '+response.data);
-          this.$message({
+          _this.$message({
             type: 'success',
             message: 'Registro deletado com sucesso!'
           });
+          window.location.href = "/backend/producao";
         }).catch(function (error) {
           console.log(error);
         });
       }).catch(() => {
-        this.$message({
+        _this.$message({
           type: 'info',
           message: 'Operação cancelada!'
         });
@@ -130,6 +132,7 @@ export default {
         data: this.ruleForm.dateInput,
         valor: this.ruleForm.valorInput,
       }).then(function (response) {
+        window.location.href = "/backend/producao";
         console.log('Retorno do insert: '+response.data);
       })
       .catch(function (error) {

@@ -31,6 +31,7 @@ Vue.component('table-producao', require('./components/TableProducao.vue'));
 Vue.component('quotation-brinfinty', require('./components/Quotation.vue'));
 Vue.component('report-brinfinty', require('./components/Report.vue'));
 Vue.component('report-table', require('./components/ReportTable.vue'));
+Vue.component('report-table-mensal', require('./components/ReportTableMensal.vue'));
 
 const app = new Vue({
   el: '#app'
