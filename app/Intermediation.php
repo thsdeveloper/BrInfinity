@@ -26,5 +26,9 @@ class Intermediation extends Model{
     return $this->belongsTo(Brokerage::class, 'id_brokerage');
   }
 
+  public function productivity(){
+    return $this->belongsTo(Productivity::class, 'id_productivity');
+  }
+
 
 }

@@ -1,9 +1,17 @@
 <template>
   <div class="report-brinfinite">
-    <canvas id="mycanvas2" count="1"></canvas>
-    <chartjs-bar target="mycanvas2" :labels="meses" :datalabel="index" :data="row.index" v-for="(row, index) in this.dados" v-bind:key="index"></chartjs-bar>
+    <canvas id="mycanvas2" count="2"></canvas>
 
-  </div>
+    <chartjs-bar target="mycanvas2"
+    :labels="meses"
+    :datalabel="row.seguradora"
+    :data="row.valores"
+    v-for="(row, index) in this.dados"
+    v-bind:key="index">
+    </chartjs-bar>
+
+
+</div>
 </div>
 </template>
 
@@ -13,7 +21,7 @@ export default {
   data(){
     return {
       meses : ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
-      data : [100, 40, 60, 100, 40, 60100, 40, 60100, 40, 60100, 40, 60100, 40, 60100, 40, 60]
+      data : [50, 90, 50, 90, 50, 90, 50, 100, 40, 232, 40, 567]
     }
   },
   methods: {

@@ -8,13 +8,12 @@
       </div>
     </div>
 
-
     <div class="row">
-      <div class="col-md-6">
-        <report-brinfinty :dados="{{$retorno}}"></report-brinfinty>
+      <div class="col-md-12">
+        <report-table :dados="{{$table}}"></report-table>
       </div>
-      <div class="col-md-6">
-        Tabela
+      <div class="col-md-12">
+        <report-brinfinty :dados="{{$retorno}}"></report-brinfinty>
       </div>
     </div>
   </div>
