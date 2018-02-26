@@ -4,18 +4,31 @@
     <div class="header">
       <div class="row">
         <div class="col-md-6">
-          <h1>Cotação</h1>
+          <h1>Cotação </h1>
         </div>
         <div class="col-md-6">
-          <el-button type="primary" class="pull-right" icon="el-icon-circle-plus" @click="dialogQuotation = true">Nova cotação</el-button>
+          <el-button type="primary" class="pull-right" icon="el-icon-circle-plus" @click="dialogQuotation = true"> Nova cotação</el-button>
         </div>
       </div>
     </div>
 
     <div class="row">
       <div class="col-md-12">
+        <data-tables :data="this.cotacao" style="width: 100%" :show-action-bar="false" :custom-filters="customFilters">
 
-        <el-table :data="this.cotacao" style="width: 100%">
+
+          <el-row slot="custom-tool-bar" style="margin-bottom: 10px">
+            <el-col :span="6">
+              <el-select v-model="customFilters[1].vals" placeholder="Selecione uma data">
+                <el-option v-for="m in this.cotacao" :key="m.id" :label="m.date_solicitation | formatDate" :value="m.date_solicitation">
+                </el-option>
+              </el-select>
+            </el-col>
+            <el-col :span="5">
+              <el-input v-model="customFilters[0].vals" placeholder="Digite o nome do proponente"></el-input>
+            </el-col>
+          </el-row>
+
           <el-table-column type="expand">
             <template slot-scope="props">
               <h3>Informações detalhadas:</h3>
@@ -23,14 +36,14 @@
             </template>
           </el-table-column>
 
-          <el-table-column prop="date_solicitation" label="Data da solicitação"></el-table-column>
-          <el-table-column prop="brokerage.name" label="Corretora" width="300"></el-table-column>
-          <el-table-column prop="user.name" label="Gerente Comercial"></el-table-column>
-          <el-table-column prop="proponent" label="Proponente"></el-table-column>
-          <el-table-column prop="industry" label="Ramo"></el-table-column>
-          <el-table-column prop="validity" label="Prazo (dias)"></el-table-column>
+          <el-table-column prop="date_solicitation" label="Data da solicitação" sortable></el-table-column>
+          <el-table-column prop="brokerage.name" label="Corretora" width="300" sortable></el-table-column>
+          <el-table-column prop="user.name" label="Gerente Comercial" sortable></el-table-column>
+          <el-table-column prop="proponent" label="Proponente" sortable></el-table-column>
+          <el-table-column prop="industry" label="Ramo" sortable></el-table-column>
+          <el-table-column prop="validity" label="Prazo (dias)" sortable></el-table-column>
 
-          <el-table-column prop="validity" label="Status da cotação" width="250">
+          <el-table-column prop="validity" label="Status da cotação" width="250" sortable>
 
             <template slot-scope="scope">
 
@@ -41,7 +54,6 @@
               <el-tooltip class="item" effect="dark" content="Definir como não fechado" placement="top" v-show="scope.row.status == 0">
                 <el-button icon="el-icon-circle-close-outline" size="mini" @click="handleNoConfirmed(scope.$index, scope.row)"></el-button>
               </el-tooltip>
-
 
               <el-tooltip class="item" effect="dark" :content="scope.row.text_status" placement="top" v-show="scope.row.status == 1">
                 <el-tag type="success" v-show="scope.row.status == 1">Cotação Fechada</el-tag>
@@ -58,7 +70,6 @@
                 <el-button icon="el-icon-refresh" size="mini" @click="handleNegociacao(scope.$index, scope.row)"></el-button>
               </el-tooltip>
 
-
             </template>
 
           </el-table-column>
@@ -69,7 +80,7 @@
               <el-button type="danger" plain size="small" icon="el-icon-delete" @click="handleDelete(scope.$index, scope.row.id)">Excluir</el-button>
             </template>
           </el-table-column>
-        </el-table>
+        </data-tables>
 
         <el-dialog title="Cadastrar nova cotação" :visible.sync="dialogQuotation" width="60%" :before-close="handleClose">
           <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
@@ -162,7 +173,20 @@
               </el-col>
             </el-row>
 
-
+            <el-row :gutter="20">
+              <el-col :span="24">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="col-md-2">
+                      <img :src="image" class="img-responsive">
+                    </div>
+                    <div class="col-md-8">
+                      <input type="file" v-on:change="onFileChange" class="form-control">
+                    </div>
+                  </div>
+                </div>
+              </el-col>
+            </el-row>
 
             <el-row :gutter="20">
               <el-col :span="24">
@@ -206,6 +230,30 @@ export default {
   props:['cotacao', 'brokerage', 'business', 'insurer', 'user'],
   data(){
     return {
+      //upload de arquivos
+      arquivo: '',
+
+
+      //Filter Tbale
+      customFilters: [{vals: '', props: 'proponent'}, {vals: '', props: 'date_solicitation'}],
+
+      meses: [{
+        value: 'Option1',
+        label: 'Janeiro'
+      }, {
+        value: 'Option2',
+        label: 'Fevereiro'
+      }, {
+        value: 'Option3',
+        label: 'Março'
+      }, {
+        value: 'Option4',
+        label: 'Abril'
+      }, {
+        value: 'Option5',
+        label: 'Maio'
+      }],
+
       //Modal Dialog
       dialogQuotation: false,
       dialogStatus: false,
@@ -235,6 +283,7 @@ export default {
         congenere: '',
         last_value: '',
         comission: '',
+        arquivo: '',
       },
 
       ruleFormStatus:{
@@ -274,7 +323,18 @@ export default {
       }
     }
   },
+
+  filters: {
+    formatDate: function (value) {
+      if (value) {
+        return value
+      }
+    }
+  },
   methods: {
+    onFileChange(e) {
+      console.log(e);
+    },
     editQuotation(index, row){
       var _this = this;
 
@@ -332,7 +392,7 @@ export default {
             type: 'success',
             message: 'Cotação excluída com sucesso!'
           });
-          window.location.href = "/backend/cotacao";
+          window.location.href = "/gerenciador/cotacao";
         }).catch(function (error) {
           console.log(error);
         });
@@ -372,7 +432,7 @@ export default {
               status: this.idStatus,
             }).then(function (response) {
               _this.fullscreenLoading = false;
-              window.location.href = "/backend/cotacao";
+              window.location.href = "/gerenciador/cotacao";
               console.log(response);
             }).catch(function (error) {
               console.log(error);
@@ -412,10 +472,11 @@ export default {
                 congenere: this.ruleForm.congenere,
                 last_value: this.ruleForm.last_value,
                 comission: this.ruleForm.comission,
+                arquivo: this.urlArquivo,
 
               }).then(function (response) {
                 _this.fullscreenLoading = false;
-                window.location.href = "/backend/cotacao";
+                window.location.href = "/gerenciador/cotacao";
                 console.log(response);
               }).catch(function (error) {
                 console.log(error);
@@ -442,10 +503,11 @@ export default {
                 congenere: this.ruleForm.congenere,
                 last_value: this.ruleForm.last_value,
                 comission: this.ruleForm.comission,
+                arquivo: this.urlArquivo,
 
               }).then(function (response) {
                 _this.fullscreenLoading = false;
-                window.location.href = "/backend/cotacao";
+                window.location.href = "/gerenciador/cotacao";
                 console.log(response);
               }).catch(function (error) {
                 console.log(error);
@@ -480,5 +542,14 @@ h1 {
 }
 .el-select.mold-input-select {
   width: 100%;
+}
+.el-select {
+  width: 100%;
+}
+input.el-upload__input {
+  display: none;
+}
+span.caret-wrapper {
+    display: none!important;
 }
 </style>

@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\HasMedia\Interfaces\HasMedia;
 
 
-class Quotation extends Model{
+class Quotation extends Model implements HasMedia{
+  use HasMediaTrait;
 
   protected $fillable = ['date_solicitation', 'proponent', 'cpf', 'industry', 'description', 'value', 'id_insurer', 'id_brokerage', 'id_user', 'id_business', 'status'];
 

@@ -21,35 +21,9 @@ class ProductionController extends Controller
 
   public function showGeral()
   {
-    $true = true;
-    if($true){
-      $all = DB::table('users')
-      ->join('intermediations', 'users.id', '=', 'intermediations.id_user')
-      ->join('insurers', 'insurers.id', '=', 'intermediations.id_insurer')
-      ->join('brokerages', 'brokerages.id', '=', 'intermediations.id_brokerage')
-      ->join('productivities', 'productivities.id_intermediation', '=', 'intermediations.id')
-      ->get(array('users.name as users_name', 'brokerages.name as brokerages_name', 'insurers.name as insurers_name', 'intermediations.id as intermediations_id', 'productivities.value as productivities_value'));
 
-      $allInsurers = DB::table('insurers')
-      ->get(array('insurers.name as insurers_name'));
+    return view('producao');
 
-      $allDates = DB::table('users')
-      ->join('intermediations', 'users.id', '=', 'intermediations.id_user')
-      ->join('productivities', 'productivities.id_intermediation', '=', 'intermediations.id')
-      ->get(array('productivities.date as productivities_data'));
-
-      $allBrokers = DB::table('users')
-      ->get(array('users.id as users_id', 'users.name as users_name' ));
-
-      $arrayTableProducao = ProductionController::arrayTableProducao($all,$allInsurers);
-      $arrayTableInsurers = ProductionController::arrayTableInsurers($allInsurers);
-
-
-
-      return view('producao', ['producao' => $arrayTableProducao, 'insurers' => $arrayTableInsurers, 'dates' => $allDates, 'brokers' => $allBrokers, 'errors' => '']);
-    }else{
-      return view('producao', ['errors' => 'Usuário não possui permissão para ver esses dados']);
-    }
   }
 
   public function show($id)

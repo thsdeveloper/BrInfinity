@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 use Carbon\Carbon;
 use App\Quotation;
 use App\Brokerage;
@@ -38,6 +39,8 @@ class QuotationController extends Controller{
     $id_user = $request->input('id_user');
     $id_business = $request->input('id_business');
 
+    $UrlArquivo = $request->input('arquivo');
+
     $retorno = Quotation::create(
       [
         'date_solicitation' => Carbon::parse($date_solicitation),
@@ -52,6 +55,9 @@ class QuotationController extends Controller{
         'id_business' => $id_business,
       ]
     );
+
+     $retorno->addMediaFromBase64($UrlArquivo)->toMediaLibrary('cotacao');
+
 
     return $retorno;
   }
@@ -105,7 +111,7 @@ class QuotationController extends Controller{
     $quotation->text_status = $text_status;
     $quotation->status = $status;
 
-    $quotation->date_solicitation = $date_solicitation;
+    $quotation->date_solicitation = Carbon::parse($date_solicitation);
     $quotation->proponent = $proponent;
     $quotation->cpf = $cpf;
     $quotation->industry = $industry;
@@ -128,5 +134,20 @@ class QuotationController extends Controller{
       return 'Deu erro';
     }
 
+  }
+
+
+  public function downloadCotacao($type){
+    //$data = User::get()->toArray();
+
+    $data = Quotation::get()->toArray();
+    //$insurer = Insurer::get()->toArray();
+
+
+    return Excel::create('relatorio', function($excel) use ($data) {
+      $excel->sheet('mySheet', function($sheet) use ($data){
+        $sheet->fromArray($data);
+      });
+    })->download($type);
   }
 }

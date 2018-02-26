@@ -48,7 +48,7 @@ export default {
   mounted() {
     var _this = this;
 
-    axios.get('/backend/user/1')
+    axios.get('/gerenciador/user/1')
     .then(function (response) {
       console.log(response.data);
 

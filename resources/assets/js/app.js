@@ -11,6 +11,8 @@ window.Vue = require('vue');
 
 import ElementUI from 'element-ui'
 import locale from 'element-ui/lib/locale/lang/pt-br'
+import DataTables from 'vue-data-tables'
+Vue.use(DataTables)
 Vue.use(ElementUI, {locale})
 
 // chartjs package

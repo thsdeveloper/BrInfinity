@@ -111,7 +111,7 @@ export default {
             type: 'success',
             message: 'Registro deletado com sucesso!'
           });
-          window.location.href = "/backend/producao";
+          window.location.href = "/gerenciador/producao";
         }).catch(function (error) {
           console.log(error);
         });
@@ -132,7 +132,7 @@ export default {
         data: this.ruleForm.dateInput,
         valor: this.ruleForm.valorInput,
       }).then(function (response) {
-        window.location.href = "/backend/producao";
+        window.location.href = "/gerenciador/producao";
         console.log('Retorno do insert: '+response.data);
       })
       .catch(function (error) {

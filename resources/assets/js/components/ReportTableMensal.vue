@@ -1,7 +1,5 @@
 <template>
   <div class="report-table-mensal">
-
-
     <div class="col-md-4" v-for="(row, index) in this.seguradoras" v-bind:key="index">
       <div class="panel panel-default">
         <div class="panel-heading">

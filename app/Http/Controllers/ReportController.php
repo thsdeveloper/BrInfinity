@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Productivity;
 use App\Intermediation;
 use App\Insurer;
+use App\User;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ReportController extends Controller{
 
@@ -160,4 +162,37 @@ class ReportController extends Controller{
 
     return $productivity;
   }
+
+
+  public function downloadExcel($type){
+    //$data = User::get()->toArray();
+
+    $data = Productivity::get()->toArray();
+    //$insurer = Insurer::get()->toArray();
+
+
+    return Excel::create('relatorio', function($excel) use ($data) {
+      $excel->sheet('mySheet', function($sheet) use ($data){
+        $sheet->fromArray($data);
+      });
+    })->download($type);
+
+  }
+
+  public function downloadAnual($type){
+    //$data = User::get()->toArray();
+
+    $data = Productivity::get()->toArray();
+    //$insurer = Insurer::get()->toArray();
+
+    return Excel::create('relatorio', function($excel) use ($data) {
+      $excel->sheet('mySheet', function($sheet) use ($data){
+        $sheet->fromArray($data);
+      });
+    })->download($type);
+
+  }
+
+
+
 }
