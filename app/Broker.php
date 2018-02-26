@@ -4,8 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-
-class Brokerage extends Model
+class Broker extends Model
 {
-
+    //
 }
