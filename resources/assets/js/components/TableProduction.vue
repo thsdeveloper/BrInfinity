@@ -1,10 +1,9 @@
 <template>
   <div class="tabel-producao">
-    <el-table :data="this.data" stripe style="width: 100%">
+    <el-table :data="this.productions" stripe style="width: 100%">
 
       <el-table-column prop="broker.name" label="Corretoras"></el-table-column>
-      <el-table-column prop="value" :label="insurer.name" v-for="insurer in this.insurers" :key="insurer.id"></el-table-column>
-      <el-table-column prop="value" label="Total"></el-table-column>
+      <el-table-column prop="insurer_production.value" label="Total"></el-table-column>
 
     </el-table>
   </div>
@@ -12,7 +11,7 @@
 
 <script>
 export default {
-  props:['data', 'insurers'],
+  props:['productions'],
   data(){
     return {
 

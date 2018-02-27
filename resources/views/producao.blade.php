@@ -5,7 +5,7 @@
     <div class="col-md-12">
       {{-- Atualização  {{dd($productions)}} --}}
 
-      <table-production :data="{{$productions}}" :insurers="{{$insurers}}"></table-production>
+      <table-production :productions="{{$productions}}"></table-production>
     </div>
   </div>
 @endsection
