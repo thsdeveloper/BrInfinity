@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use Carbon\Carbon;
 use App\Quotation;
-use App\Brokerage;
+use App\Broker;
 use App\Business;
 use App\Insurer;
 use App\User;
@@ -17,7 +17,7 @@ class QuotationController extends Controller{
 
   public function index(){
     $quotations = Quotation::with('brokerage', 'user', 'business')->get();
-    $brokerage = Brokerage::get();
+    $brokerage = Broker::get();
     $business = Business::get();
     $insurer = Insurer::get();
     $user = Auth::user();

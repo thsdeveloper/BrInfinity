@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use App\Productivity;
+use App\Production;
+use App\Insurer;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -19,15 +20,17 @@ class ProductionController extends Controller
   * @return Response
   */
 
-  public function showGeral()
-  {
+  public function showGeral(){
 
-    return view('producao');
+    $productions = Production::with('broker', 'insurers')->get();
+
+    dd($productions);
+
+    return view('producao', compact('productions'));
 
   }
 
-  public function show($id)
-  {
+  public function show($id){
     if($id == Auth::id() || $id == $id){
       $all = DB::table('users')
       ->join('intermediations', 'users.id', '=', 'intermediations.id_user')

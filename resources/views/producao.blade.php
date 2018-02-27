@@ -3,7 +3,9 @@
 @section('content')
   <div class="row">
     <div class="col-md-12">
-      sss
+      {{-- Atualização  {{dd($productions)}} --}}
+
+      <table-production :data="{{$productions}}" :insurers="{{$insurers}}"></table-production>
     </div>
   </div>
 @endsection

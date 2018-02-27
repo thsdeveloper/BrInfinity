@@ -14,7 +14,7 @@ class Quotation extends Model implements HasMedia{
 
 
   public function brokerage(){
-    return $this->belongsTo(Brokerage::class, 'id_brokerage');
+    return $this->belongsTo(Broker::class, 'id_broker');
   }
 
   public function user(){

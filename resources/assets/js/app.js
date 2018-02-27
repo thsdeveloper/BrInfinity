@@ -11,16 +11,7 @@ window.Vue = require('vue');
 
 import ElementUI from 'element-ui'
 import locale from 'element-ui/lib/locale/lang/pt-br'
-import DataTables from 'vue-data-tables'
-Vue.use(DataTables)
 Vue.use(ElementUI, {locale})
-
-// chartjs package
-require('chart.js');
-// vue-charts package
-require('hchs-vue-charts');
-Vue.use(VueCharts);
-
 /**
 * Next, we will create a fresh Vue application instance and attach it to
 * the page. Then, you may begin adding components to this application
@@ -28,7 +19,7 @@ Vue.use(VueCharts);
 */
 
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
-Vue.component('table-producao', require('./components/TableProducao.vue'));
+Vue.component('table-production', require('./components/TableProduction.vue'));
 
 Vue.component('quotation-brinfinty', require('./components/Quotation.vue'));
 Vue.component('report-brinfinty', require('./components/Report.vue'));
