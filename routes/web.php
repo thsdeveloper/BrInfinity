@@ -33,7 +33,6 @@ Route::get('relatorio', 'ReportController@index')->middleware('auth');
 Route::get('relatorio/mensal', 'ReportController@mensal')->middleware('auth');
 Route::get('relatorio/{id}/periodo/{ano}', 'ReportController@showData')->middleware('auth');
 
-
 Route::get('downloadReport/{type}', 'ReportController@downloadExcel');
 Route::get('downloadAnual/{type}', 'ReportController@downloadAnual');
 Route::get('downloadCotacao/{type}', 'QuotationController@downloadCotacao');
@@ -41,9 +40,7 @@ Route::get('listaEmails/{type}', 'HomeController@listaEmails');
 
 
 
-Route::group(['prefix' => 'admin'], function () {
-    Voyager::routes();
-});
+
 Route::get('/user/{id}', 'UserController@getUser');
 
 Auth::routes();

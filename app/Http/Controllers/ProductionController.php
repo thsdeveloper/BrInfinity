@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Corretora;
+use App\Seguradora;
 use App\Production;
-use App\Insurer;
-use App\InsurerProduction;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -23,13 +23,19 @@ class ProductionController extends Controller
 
   public function showGeral(){
 
-    $productions = Production::with('broker', 'insurers')->get();
+    $corretoras = Corretora::get();
+    $seguradoras = Seguradora::get();
+
+
+    $producoes = Production::with('corretora', 'seguradora')->get();
+    //dd($producoes);
+
+
     // $insurersProduction = InsurerProduction::with('insurers')->get();
     // $insurers = Insurer::getAll();
+    // dd($producoes);
 
-    dd($productions);
-
-    return view('producao', compact('productions'));
+    return view('producao', compact('corretoras', 'seguradoras', 'producoes'));
 
   }
 

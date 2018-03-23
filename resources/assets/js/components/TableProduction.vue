@@ -1,20 +1,64 @@
 <template>
   <div class="tabel-producao">
-    <el-table :data="this.productions" stripe style="width: 100%">
+    <el-table :data="items" style="width: 100%">
 
-      <el-table-column prop="broker.name" label="Corretoras"></el-table-column>
-      <el-table-column prop="insurer_production.value" label="Total"></el-table-column>
+     <el-table-column
+       prop="corretora"
+       label="Corretoras"
+       width="180">
+     </el-table-column>
 
-    </el-table>
+     <el-table-column
+       prop="name"
+       label="Name"
+       width="180">
+     </el-table-column>
+
+     <el-table-column
+       prop="address"
+       label="Address">
+     </el-table-column>
+   </el-table>
   </div>
 </template>
 
 <script>
 export default {
-  props:['productions'],
+  props:['corretoras', 'seguradoras', 'producoes'],
   data(){
     return {
-
+      items: [
+        {
+          corretora: "Corretora 1",
+        },
+        {
+          corretora: "Corretora 1",
+        },
+        {
+          corretora: "Corretora 1",
+        },
+        {
+          corretora: "Corretora 1",
+        },
+        {
+          corretora: "Corretora 1",
+        },
+        {
+          corretora: "Corretora 1",
+        },
+        {
+          corretora: "Corretora 1",
+        },
+        {
+          corretora: "Corretora 1",
+        },
+        {
+          corretora: "Corretora 1",
+        },
+        {
+          corretora: "Corretora 1",
+        }
+      ]
     }
   },
   methods: {
