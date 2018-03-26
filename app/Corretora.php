@@ -7,11 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class Corretora extends Model{
 
   public function seguradoras(){
-    return $this->belongsToMany(Seguradora::class);
+    return $this->hasMany(Seguradora::class);
   }
 
   public function producoes(){
-    return $this->belongsToMany(Producoe::class);
+    return $this->hasMany(Production::class);
   }
+
+
 
 }

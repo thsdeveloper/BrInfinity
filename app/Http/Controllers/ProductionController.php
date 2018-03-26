@@ -6,9 +6,11 @@ use App\User;
 use App\Corretora;
 use App\Seguradora;
 use App\Production;
+use App\Intermediation;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Model;
 use DB;
 use Carbon\Carbon;
 
@@ -22,20 +24,28 @@ class ProductionController extends Controller
   */
 
   public function showGeral(){
-
-    $corretoras = Corretora::get();
-    $seguradoras = Seguradora::get();
-
-
-    $producoes = Production::with('corretora', 'seguradora')->get();
-    //dd($producoes);
-
-
+    // $producoes = Production::with('intermediation.corretora', 'intermediation.seguradora')->get(['valor', 'intermediation_id']);
+    // $corretoras = Corretora::get();
+    // $seguradoras = Seguradora::get(['id']);
     // $insurersProduction = InsurerProduction::with('insurers')->get();
     // $insurers = Insurer::getAll();
     // dd($producoes);
 
-    return view('producao', compact('corretoras', 'seguradoras', 'producoes'));
+    $data = Corretora::with('seguradoras')->get();
+
+    $intermedations = DB::table('intermediations')
+    ->join('productions', 'intermediations.id', '=', 'productions.intermediation_id')
+    ->join('seguradoras', 'intermediations.seguradora_id', '=', 'seguradoras.id')
+    ->select(array(DB::raw('sum(productions.valor) AS total')))
+    ->get();
+
+    //->sum('productions.valor');
+
+    // $seguradoras
+
+
+
+    return view('producao', compact('corretoras', 'seguradoras', 'data'));
 
   }
 

@@ -3,10 +3,7 @@
 @section('content')
   <div class="row">
     <div class="col-md-12">
-
-
-      
-      <table-production :corretoras="{{$corretoras}}" :seguradoras="{{$seguradoras}}" :producoes="{{$producoes}}"></table-production>
+      <table-production :data="{{$data}}"></table-production>
     </div>
   </div>
 @endsection

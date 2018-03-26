@@ -87305,7 +87305,7 @@ exports = module.exports = __webpack_require__(47)(undefined);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -87340,31 +87340,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['corretoras', 'seguradoras', 'producoes'],
+  props: ['data'],
   data: function data() {
     return {
-      items: [{
-        corretora: "Corretora 1"
+      tableData: [{
+        date: '2016-05-03',
+        name: 'Tom',
+        address: 'No. 189, Grove St, Los Angeles'
       }, {
-        corretora: "Corretora 1"
+        date: '2016-05-02',
+        name: 'Tom',
+        address: 'No. 189, Grove St, Los Angeles'
       }, {
-        corretora: "Corretora 1"
+        date: '2016-05-04',
+        name: 'Tom',
+        address: 'No. 189, Grove St, Los Angeles'
       }, {
-        corretora: "Corretora 1"
-      }, {
-        corretora: "Corretora 1"
-      }, {
-        corretora: "Corretora 1"
-      }, {
-        corretora: "Corretora 1"
-      }, {
-        corretora: "Corretora 1"
-      }, {
-        corretora: "Corretora 1"
-      }, {
-        corretora: "Corretora 1"
+        date: '2016-05-01',
+        name: 'Tom',
+        address: 'No. 189, Grove St, Los Angeles'
       }]
     };
   },
@@ -87372,7 +87371,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   methods: {},
   mounted: function mounted() {
     console.log("Componente Table Montado");
-  }
+  },
+
+  computed: {}
 });
 
 /***/ }),
@@ -87387,26 +87388,28 @@ var render = function() {
     "div",
     { staticClass: "tabel-producao" },
     [
-      _c(
-        "el-table",
-        { staticStyle: { width: "100%" }, attrs: { data: _vm.items } },
-        [
-          _c("el-table-column", {
-            attrs: { prop: "corretora", label: "Corretoras", width: "180" }
-          }),
-          _vm._v(" "),
-          _c("el-table-column", {
-            attrs: { prop: "name", label: "Name", width: "180" }
-          }),
-          _vm._v(" "),
-          _c("el-table-column", {
-            attrs: { prop: "address", label: "Address" }
-          })
-        ],
-        1
-      )
+      [
+        _c(
+          "el-table",
+          { staticStyle: { width: "100%" }, attrs: { data: _vm.tableData } },
+          [
+            _c("el-table-column", {
+              attrs: { prop: "date", label: "Corretoras", width: "180" }
+            }),
+            _vm._v(" "),
+            _c("el-table-column", {
+              attrs: { prop: "name", label: "Name", width: "180" }
+            }),
+            _vm._v(" "),
+            _c("el-table-column", {
+              attrs: { prop: "address", label: "Address" }
+            })
+          ],
+          1
+        )
+      ]
     ],
-    1
+    2
   )
 }
 var staticRenderFns = []
