@@ -39,6 +39,16 @@ Route::get('downloadCotacao/{type}', 'QuotationController@downloadCotacao');
 Route::get('listaEmails/{type}', 'HomeController@listaEmails');
 
 
+Route::get('seguradoras', 'SeguradoraController@index');
+Route::post('seguradora/inserir', 'SeguradoraController@inserir');
+Route::post('seguradora/deletar/{id}', 'SeguradoraController@deletar');
+Route::post('seguradora/atualizar/{id}', 'SeguradoraController@atualizar');
+
+Route::get('corretoras', 'CorretoraController@index');
+Route::post('corretora/inserir', 'CorretoraController@inserir');
+Route::post('corretora/deletar/{id}', 'CorretoraController@deletar');
+Route::post('corretora/atualizar/{id}', 'CorretoraController@atualizar');
+
 
 
 Route::get('/user/{id}', 'UserController@getUser');

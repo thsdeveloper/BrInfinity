@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "8cb1cfbfa9d78cfcbfd3092a5165b354",
+    "content-hash": "eb6a806604f7b01783c2249de1e4f599",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -1021,6 +1021,58 @@
             "time": "2018-03-09T13:14:19+00:00"
         },
         {
+            "name": "maennchen/zipstream-php",
+            "version": "v0.4.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/maennchen/ZipStream-PHP.git",
+                "reference": "89e0cdb3c9ecabef4da988852003781a7802afb7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/maennchen/ZipStream-PHP/zipball/89e0cdb3c9ecabef4da988852003781a7802afb7",
+                "reference": "89e0cdb3c9ecabef4da988852003781a7802afb7",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "php": ">= 5.6"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.3.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ZipStream\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Paul Duncan",
+                    "email": "pabs@pablotron.org"
+                },
+                {
+                    "name": "Jesse Donat",
+                    "email": "donatj@gmail.com"
+                },
+                {
+                    "name": "Jonatan Männchen",
+                    "email": "jonatan@maennchen.ch"
+                }
+            ],
+            "description": "ZipStream is a library for dynamically streaming dynamic zip files from PHP without writing to the disk at all on the server.",
+            "keywords": [
+                "stream",
+                "zip"
+            ],
+            "time": "2016-09-13T10:29:17+00:00"
+        },
+        {
             "name": "monolog/monolog",
             "version": "1.23.0",
             "source": {
@@ -1800,16 +1852,16 @@
         },
         {
             "name": "spatie/laravel-medialibrary",
-            "version": "6.9.0",
+            "version": "7.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-medialibrary.git",
-                "reference": "28f96fe695763c0f4c145db9ed8cc9d58ceef6e9"
+                "reference": "e965549f16e3b37f9c3a2ccf8021851fce62bb64"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-medialibrary/zipball/28f96fe695763c0f4c145db9ed8cc9d58ceef6e9",
-                "reference": "28f96fe695763c0f4c145db9ed8cc9d58ceef6e9",
+                "url": "https://api.github.com/repos/spatie/laravel-medialibrary/zipball/e965549f16e3b37f9c3a2ccf8021851fce62bb64",
+                "reference": "e965549f16e3b37f9c3a2ccf8021851fce62bb64",
                 "shasum": ""
             },
             "require": {
@@ -1819,8 +1871,9 @@
                 "illuminate/pipeline": "~5.5.0|~5.6.0",
                 "illuminate/support": "~5.5.0|~5.6.0",
                 "league/flysystem": "^1.0.8",
-                "php": "^7.0",
-                "spatie/image": "^1.4",
+                "maennchen/zipstream-php": "0.4.1",
+                "php": "^7.1",
+                "spatie/image": "^1.4.0",
                 "spatie/pdf-to-image": "^1.2",
                 "spatie/temporary-directory": "^1.1"
             },
@@ -1833,7 +1886,8 @@
                 "league/flysystem-aws-s3-v3": "^1.0.13",
                 "mockery/mockery": "^1.0.0",
                 "orchestra/testbench": "~3.5.0|~3.6.0",
-                "phpunit/phpunit": "^6.2|^7.0"
+                "phpunit/phpunit": "^7.0",
+                "spatie/phpunit-snapshot-assertions": "^1.2"
             },
             "suggest": {
                 "league/flysystem-aws-s3-v3": "Required to use AWS S3 file storage",
@@ -1876,7 +1930,7 @@
                 "media",
                 "spatie"
             ],
-            "time": "2018-03-04T13:01:20+00:00"
+            "time": "2018-03-30T10:46:40+00:00"
         },
         {
             "name": "spatie/pdf-to-image",

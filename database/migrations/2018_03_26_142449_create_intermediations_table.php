@@ -24,8 +24,7 @@ class CreateIntermediationsTable extends Migration
 
       $table->integer('seguradora_id')->unsigned();
       $table->foreign('seguradora_id')->references('id')->on('seguradoras')->onDelete('cascade');
-      
-      $table->timestamps();
+
     });
   }
 

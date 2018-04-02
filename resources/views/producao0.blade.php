@@ -8,7 +8,7 @@
         <div class="col-md-4">
           <div class="form-group">
             <label for="usr">Comercial:</label>
-            <select id="select_user" class="form-control select-user" name="filter-user" >
+            <select id="select_user" class="form-control select-user" name="filter-user">
               <option value="todos">Todos</option>
               @foreach($brokers as $broker)
                 <?php $pos = strpos($_SERVER['REQUEST_URI'], '/producao/'.$broker->users_id); ?>
@@ -83,41 +83,41 @@
       </div>
 
       <script>
-    $(document).ready(function(){
+      $(document).ready(function(){
 
-      $( ".btn-intermediations" ).click(function() {
-        var intermediations_id = $(this).attr( "intermediations_id" );
-        $.get( "{{ url('/producao/intermediacao/') }}/"+intermediations_id )
-        .done(function( data ) {
-          console.log(data);
-          $( "#myModal .modal-body" ).after( data );
+        $( ".btn-intermediations" ).click(function() {
+          var intermediations_id = $(this).attr( "intermediations_id" );
+          $.get( "{{ url('/producao/intermediacao/') }}/"+intermediations_id )
+          .done(function( data ) {
+            console.log(data);
+            $( "#myModal .modal-body" ).after( data );
+          });
+        });
+
+        $("#myInput").on("keyup", function() {
+          var value = $(this).val().toLowerCase();
+          $("#producao tr").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+          });
+        });
+
+        $( ".select-date" ).change(function() {
+          if($(this).val() != 'todos'){
+            var url = "{{ url('/producao/') }}/"+$("#select_user").val()+"/periodo/"+$(this).val();
+          }else{
+            var url = "{{ url('/producao/') }}/"+$("#select_user").val();
+          }
+          window.location = url;
+        });
+
+        $( ".select-user" ).change(function() {
+          if($(this).val() != 'todos'){
+            var url = "{{ url('/producao/') }}/"+$(this).val();
+          }else{
+            var url = "{{ url('/producao/') }}";
+          }
+          window.location = url;
         });
       });
-
-      $("#myInput").on("keyup", function() {
-        var value = $(this).val().toLowerCase();
-        $("#producao tr").filter(function() {
-          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-        });
-      });
-
-      $( ".select-date" ).change(function() {
-        if($(this).val() != 'todos'){
-          var url = "{{ url('/producao/') }}/"+$("#select_user").val()+"/periodo/"+$(this).val();
-        }else{
-          var url = "{{ url('/producao/') }}/"+$("#select_user").val();
-        }
-        window.location = url;
-      });
-
-      $( ".select-user" ).change(function() {
-        if($(this).val() != 'todos'){
-          var url = "{{ url('/producao/') }}/"+$(this).val();
-        }else{
-          var url = "{{ url('/producao/') }}";
-        }
-        window.location = url;
-      });
-    });
-  </script>
+      </script>
     @stop

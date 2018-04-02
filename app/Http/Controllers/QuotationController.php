@@ -6,64 +6,58 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use Carbon\Carbon;
-use App\Quotation;
-use App\Broker;
-use App\Business;
-use App\Insurer;
+use App\Cotacoe;
+use App\Corretora;
+use App\Seguradora;
 use App\User;
 
 
 class QuotationController extends Controller{
 
   public function index(){
-    $quotations = Quotation::with('brokerage', 'user', 'business')->get();
-    $brokerage = Broker::get();
-    $business = Business::get();
-    $insurer = Insurer::get();
+    $cotacoes = Cotacoe::with('corretora', 'user', 'seguradora')->get();
+    $corretoras = Corretora::get();
+    $seguradoras = Seguradora::get();
     $user = Auth::user();
 
     //dd($user);
-    return view('quotation.index', compact('quotations', 'brokerage', 'business', 'insurer', 'user'));
+    return view('quotation/home', compact('cotacoes', 'corretoras', 'seguradoras', 'user'));
   }
 
   public function insert(Request $request){
-
-    $date_solicitation = $request->input('date_solicitation');
+    $data_solicitacao = $request->input('data_solicitacao');
     $proponent = $request->input('proponent');
     $cpf = $request->input('cpf');
-    $industry = $request->input('industry');
-    $description = $request->input('description');
-    $value = $request->input('value');
-    $id_insurer = $request->input('id_insurer');
-    $id_brokerage = $request->input('id_brokerage');
-    $id_user = $request->input('id_user');
-    $id_business = $request->input('id_business');
+    $ramo = $request->input('ramo');
+    $descricao = $request->input('descricao');
+    $negocio = $request->input('negocio');
+    $valor = $request->input('valor');
+    $seguradora_id = $request->input('seguradora_id');
+    $corretora_id = $request->input('corretora_id');
 
-    $UrlArquivo = $request->input('arquivo');
-
-    $retorno = Quotation::create(
+    $retorno = Cotacoe::create(
       [
-        'date_solicitation' => Carbon::parse($date_solicitation),
+        'data_solicitacao' => $data_solicitacao,
         'proponent' => $proponent,
         'cpf' => $cpf,
-        'industry' => $industry,
-        'description' => $description,
-        'value' => $value,
-        'id_insurer' => $id_insurer,
-        'id_brokerage' => $id_brokerage,
-        'id_user' => $id_user,
-        'id_business' => $id_business,
+        'ramo' => $ramo,
+        'descricao' => $descricao,
+        'negocio' => $negocio,
+        'valor' => $valor,
+        'status' => 0,
+        'seguradora_id' => $seguradora_id,
+        'corretora_id' => $corretora_id,
+        'user_id' => Auth::user()->id,
       ]
     );
 
-     $retorno->addMediaFromBase64($UrlArquivo)->toMediaLibrary('cotacao');
-
+    // $retorno->addMediaFromBase64($arquivo)->toMediaLibrary('cotacao');
 
     return $retorno;
   }
 
   public function delete($id){
-    $retorno = Quotation::destroy($id);
+    $retorno = Cotacoe::destroy($id);
     return $retorno;
   }
 
@@ -72,7 +66,7 @@ class QuotationController extends Controller{
     $text_status = $request->input('text_status');
     $status = $request->input('status');
 
-    $quotation = Quotation::find($id);
+    $quotation = Cotacoe::find($id);
     $quotation->text_status = $text_status;
     $quotation->status = $status;
 
@@ -84,49 +78,41 @@ class QuotationController extends Controller{
   }
 
   public function update(Request $request){
-    $id = $request->input('id');
-    $text_status = $request->input('text_status');
-    $status = $request->input('status');
+    $idQ = $request->input('idQ');
 
-
-    $date_solicitation = $request->input('date_solicitation');
+    $data_solicitacao = $request->input('data_solicitacao');
     $proponent = $request->input('proponent');
     $cpf = $request->input('cpf');
-    $industry = $request->input('industry');
-    $description = $request->input('description');
-    $value = $request->input('value');
-    $id_insurer = $request->input('id_insurer');
-    $id_brokerage = $request->input('id_brokerage');
-    $id_user = $request->input('id_user');
-    $id_business = $request->input('id_business');
-    $validity = $request->input('validity');
+    $ramo = $request->input('ramo');
+    $descricao = $request->input('descricao');
+    $negocio = $request->input('negocio');
+    $valor = $request->input('valor');
+    $seguradora_id = $request->input('seguradora_id');
+    $corretora_id = $request->input('corretora_id');
+
+    //Update
+    $data_validade = $request->input('data_validade');
     $congenere = $request->input('congenere');
-    $last_value = $request->input('last_value');
-    $comission = $request->input('comission');
-    $idStatus = $request->input('idStatus');
+    $last_valor = $request->input('last_valor');
+    $comissao = $request->input('comissao');
+    $arquivo = $request->input('arquivo');
 
-
-
-    $quotation = Quotation::find($id);
-    $quotation->text_status = $text_status;
-    $quotation->status = $status;
-
-    $quotation->date_solicitation = Carbon::parse($date_solicitation);
+    $quotation = Cotacoe::find($idQ);
+    $quotation->data_solicitacao = $data_solicitacao;
     $quotation->proponent = $proponent;
     $quotation->cpf = $cpf;
-    $quotation->industry = $industry;
-    $quotation->description = $description;
-    $quotation->value = $value;
-    $quotation->id_insurer = $id_insurer;
-    $quotation->id_brokerage = $id_brokerage;
-    $quotation->id_user = $id_user;
-    $quotation->id_business = $id_business;
-    $quotation->validity = $validity;
+    $quotation->ramo = $ramo;
+    $quotation->descricao = $descricao;
+    $quotation->negocio = $negocio;
+    $quotation->valor = $valor;
+    $quotation->seguradora_id = $seguradora_id;
+    $quotation->corretora_id = $corretora_id;
+    //Update
+    $quotation->data_validade = $data_validade;
     $quotation->congenere = $congenere;
-    $quotation->last_value = $last_value;
-    $quotation->comission = $comission;
-
-    $quotation->status = $idStatus;
+    $quotation->last_valor = $last_valor;
+    $quotation->comissao = $comissao;
+    $quotation->arquivo = $arquivo;
 
     if($quotation->save()){
       return 'Sucesso';
@@ -140,7 +126,7 @@ class QuotationController extends Controller{
   public function downloadCotacao($type){
     //$data = User::get()->toArray();
 
-    $data = Quotation::get()->toArray();
+    $data = Cotacoe::get()->toArray();
     //$insurer = Insurer::get()->toArray();
 
 

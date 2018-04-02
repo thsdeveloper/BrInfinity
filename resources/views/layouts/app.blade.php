@@ -15,6 +15,7 @@
   <!-- Styles -->
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl" crossorigin="anonymous"></script>
 
 </head>
 <body>
@@ -50,15 +51,24 @@
               <li><a href="{{ route('login') }}">Login</a></li>
               <li><a href="{{ route('register') }}">Register</a></li>
             @else
-              <li><a href="{{ url('cotacao') }}">Cotação</a></li>
+              <li><a href="{{ url('cotacao') }}"><i class="fas fa-clipboard-list"></i> Cotação</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
+                  Cadastros <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ url('seguradoras') }}"><i class="fas fa-building"></i> Seguradoras</a></li>
+                    <li><a href="{{ url('corretoras') }}"><i class="fas fa-briefcase"></i> Corretoras</a></li>
+                </ul>
+              </li>
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
                   Produção <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="{{ url('producao') }}">Geral</a></li>
-                    <li><a href="{{ url('relatorio') }}">Relatório Anual</a></li>
-                    <li><a href="{{ url('relatorio/mensal') }}">Relatório Mêsal</a></li>
+                    <li><a href="{{ url('producao') }}"><i class="far fa-list-alt"></i> Geral</a></li>
+                    <li><a href="{{ url('relatorio') }}"><i class="fas fa-chart-pie"></i> Relatório Anual</a></li>
+                    <li><a href="{{ url('relatorio/mensal') }}"><i class="fas fa-chart-pie"></i> Relatório Mêsal</a></li>
                 </ul>
               </li>
               <li class="dropdown">
@@ -87,7 +97,7 @@
   </nav>
   <div class="container">
     <div class="title m-b-md">
-      <h2>@yield('title')</h2>
+      <h2><i class="fas fa-angle-right"></i> @yield('title')</h2>
     </div>
     @yield('content')
   </div>
