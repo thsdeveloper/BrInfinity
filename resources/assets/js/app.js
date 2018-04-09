@@ -30,7 +30,7 @@ Vue.component('report-table', require('./components/ReportTable.vue'));
 Vue.component('report-table-mensal', require('./components/ReportTableMensal.vue'));
 Vue.component('table-seguradora', require('./components/TableSeguradora.vue'));
 Vue.component('table-corretora', require('./components/TableCorretora.vue'));
-
+Vue.component('table-users', require('./components/TableUsers.vue'));
 
 
 

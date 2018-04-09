@@ -8,20 +8,22 @@
         <thead>
           <tr>
             <th>CORRETORAS</th>
-            <th>Seguradoras</th>
+            @foreach ($seguradoras as $key => $s)
+              <th>{{$s->name}}</th>
+            @endforeach
           </tr>
         </thead>
         <tbody>
           @foreach ($corretoras as $c)
             <tr>
               <th>{{$c->name}}</th>
-              <td>{{$c->getTotalValor()}}</td>
+              {{-- @foreach ($seguradoras->producoes as $p)
+                <td>{{$p->getTotalValor($c->id, $s->id)}}</td>
+              @endforeach --}}
             </tr>
           @endforeach
         </tbody>
-
       </table>
-
       {{-- <table-production :corretoras="{{$corretoras}}"></table-production> --}}
     </div>
   </div>

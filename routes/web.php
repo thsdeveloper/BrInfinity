@@ -49,9 +49,12 @@ Route::post('corretora/inserir', 'CorretoraController@inserir');
 Route::post('corretora/deletar/{id}', 'CorretoraController@deletar');
 Route::post('corretora/atualizar/{id}', 'CorretoraController@atualizar');
 
-
+Route::get('/configuracoes', 'ConfiguracoesController@index');
 
 Route::get('/user/{id}', 'UserController@getUser');
+Route::get('/usuarios', 'UserController@index');
+
+Route::get('/roles', 'UserController@roles');
 
 Auth::routes();
 

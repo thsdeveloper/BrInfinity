@@ -8,7 +8,9 @@ class Seguradora extends Model
 {
 
   public function producoes(){
-    return $this->belongsToMany(Producoe::class);
+    return $this->belongsToMany(Production::class);
   }
+
+
 
 }

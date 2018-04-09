@@ -25,7 +25,9 @@ class ProductionController extends Controller
 
   public function showGeral(){
     $seguradoras = Seguradora::get();
-    $corretoras = Corretora::with('producoes', 'seguradoras')->get();
+
+    $corretoras = Corretora::with('producoes')->get();
+
 
     return view('producao', compact('corretoras', 'seguradoras'));
   }

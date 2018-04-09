@@ -10,12 +10,16 @@ class Corretora extends Model{
     return $this->belongsToMany(Seguradora::class);
   }
 
+  public function seguradora(){
+    return $this->belongsTo(Seguradora::class);
+  }
+
   public function producoes(){
     return $this->hasMany(Production::class);
   }
 
-  public function getTotalValor(){
-    return $this->producoes->sum('valor');
+  public function getTotalValor($idCorretora, $idSeguradora){
+    return $this->producoes->where('corretora_id', $idCorretora)->sum('valor');
   }
 
 

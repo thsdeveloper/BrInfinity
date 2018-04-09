@@ -59,6 +59,7 @@
                 <ul class="dropdown-menu">
                     <li><a href="{{ url('seguradoras') }}"><i class="fas fa-building"></i> Seguradoras</a></li>
                     <li><a href="{{ url('corretoras') }}"><i class="fas fa-briefcase"></i> Corretoras</a></li>
+                      <li><a href="{{ url('usuarios') }}"><i class="fas fa-users"></i> Usuários</a></li>
                 </ul>
               </li>
               <li class="dropdown">
@@ -77,11 +78,12 @@
                 </a>
 
                 <ul class="dropdown-menu">
+                    <li><a href="{{ url('configuracoes') }}"><i class="fas fa-cog"></i> Configurações</a></li>
                   <li>
                     <a href="{{ route('logout') }}"
                     onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();">
-                    Sair do sistema
+                    <i class="fas fa-sign-out-alt"></i> Sair do sistema
                   </a>
 
                   <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
