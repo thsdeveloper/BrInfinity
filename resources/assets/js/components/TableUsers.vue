@@ -48,9 +48,6 @@ export default {
       //Permisoes do usuarios
       roles: null,
 
-      //Filtro da Tabela
-      customFilters: [{vals: '', props: 'name'}],
-
       //dialog
       dialogEditUser: false,
 

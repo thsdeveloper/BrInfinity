@@ -25,11 +25,23 @@ class ProductionController extends Controller
 
   public function showGeral(){
     $seguradoras = Seguradora::get();
+    $corretoras = Corretora::get();
 
-    $corretoras = Corretora::with('producoes')->get();
+    $producoes = DB::table('productions')
+
+    ->join('intermediations', 'intermediations.id', '=', 'intermediation_id')
+    ->join('users', 'users.id', '=', 'intermediations.user_id')
+    ->join('corretoras', 'corretoras.id', '=', 'intermediations.corretora_id')
+    ->join('seguradoras', 'seguradoras.id', '=', 'intermediations.seguradora_id')
+
+    ->select(DB::raw('users.name as user_name, corretoras.name as corretora_name,  seguradoras.name as seguradora_name, seguradoras.id as seguradora_id, corretoras.id as corretora_id, SUM(valor) as total'))
+    ->groupBy(DB::raw('productions.intermediation_id, users.name, corretoras.name, seguradoras.name, seguradoras.id, corretoras.id'))
+    ->orderBy(DB::raw('corretoras.name'))
+    ->get();
 
 
-    return view('producao', compact('corretoras', 'seguradoras'));
+
+    return view('producao', compact('corretoras', 'seguradoras', 'producoes'));
   }
 
   public function insert(Request $request){

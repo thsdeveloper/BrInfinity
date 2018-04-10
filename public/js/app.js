@@ -16078,6 +16078,7 @@ Vue.component('report-table-mensal', __webpack_require__(206));
 Vue.component('table-seguradora', __webpack_require__(209));
 Vue.component('table-corretora', __webpack_require__(214));
 Vue.component('table-users', __webpack_require__(219));
+Vue.component('table-configuracao', __webpack_require__(233));
 
 var app = new Vue({
   el: '#app'
@@ -87330,7 +87331,7 @@ exports = module.exports = __webpack_require__(15)(undefined);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -87359,9 +87360,40 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['corretoras'],
+  props: ['corretoras', 'seguradoras', 'producoes'],
   data: function data() {
     return {};
   },
@@ -87386,24 +87418,65 @@ var render = function() {
     "div",
     { staticClass: "tabel-producao" },
     [
-      [
-        _c(
-          "el-table",
-          { staticStyle: { width: "100%" }, attrs: { data: _vm.corretoras } },
-          [
-            _c("el-table-column", {
-              attrs: { prop: "name", label: "Corretoras" }
-            }),
-            _vm._v(" "),
-            _c("el-table-column", {
-              attrs: { prop: "name", label: "Seguradoras" }
+      _c(
+        "el-table",
+        {
+          staticStyle: { width: "100%" },
+          attrs: { data: _vm.corretoras, border: "" }
+        },
+        [
+          _c("el-table-column", {
+            attrs: { label: "Corretoras", width: "500" },
+            scopedSlots: _vm._u([
+              {
+                key: "default",
+                fn: function(scope) {
+                  return [
+                    _c("span", { staticStyle: { "margin-left": "10px" } }, [
+                      _vm._v(_vm._s(scope.row.name))
+                    ])
+                  ]
+                }
+              }
+            ])
+          }),
+          _vm._v(" "),
+          _vm._l(_vm.seguradoras, function(s) {
+            return _c("el-table-column", {
+              key: s.id,
+              attrs: { label: s.name },
+              scopedSlots: _vm._u([
+                {
+                  key: "default",
+                  fn: function(scope) {
+                    return _vm._l(_vm.producoes, function(p) {
+                      return p.seguradora_id === s.id &&
+                        p.corretora_id === scope.row.id
+                        ? _c(
+                            "div",
+                            {
+                              key: p.id,
+                              staticStyle: { "text-align": "center" }
+                            },
+                            [
+                              _c("el-button", { attrs: { type: "text" } }, [
+                                _vm._v("R$ " + _vm._s(p.total))
+                              ])
+                            ],
+                            1
+                          )
+                        : _vm._e()
+                    })
+                  }
+                }
+              ])
             })
-          ],
-          1
-        )
-      ]
+          })
+        ],
+        2
+      )
     ],
-    2
+    1
   )
 }
 var staticRenderFns = []
@@ -90781,7 +90854,7 @@ exports = module.exports = __webpack_require__(15)(undefined);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -90841,9 +90914,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     return {
       //Permisoes do usuarios
       roles: null,
-
-      //Filtro da Tabela
-      customFilters: [{ vals: '', props: 'name' }],
 
       //dialog
       dialogEditUser: false,
@@ -91107,6 +91177,236 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 225 */,
+/* 226 */,
+/* 227 */,
+/* 228 */,
+/* 229 */,
+/* 230 */,
+/* 231 */,
+/* 232 */,
+/* 233 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(4)
+/* script */
+var __vue_script__ = __webpack_require__(234)
+/* template */
+var __vue_template__ = __webpack_require__(235)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/TableConfiguracao.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-4f3d8614", Component.options)
+  } else {
+    hotAPI.reload("data-v-4f3d8614", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 234 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      roles: null
+    };
+  },
+
+  methods: {
+    editRole: function editRole(index, row) {
+      console.log(index, row);
+    },
+    deleteRole: function deleteRole(index, row) {
+      console.log(index, row);
+    }
+  },
+  mounted: function mounted() {
+    var _this = this;
+    //Retorna as Permicoes de usuario no banco
+    axios.get('/roles').then(function (response) {
+      _this.roles = response.data;
+    }).catch(function (error) {
+      console.log(error);
+    });
+  }
+});
+
+/***/ }),
+/* 235 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "table-configuracao" },
+    [
+      _c(
+        "el-tabs",
+        { attrs: { type: "border-card" } },
+        [
+          _c(
+            "el-tab-pane",
+            { attrs: { label: "Funções de Usuários" } },
+            [
+              _c("el-button", { attrs: { type: "success" } }, [
+                _c("i", { staticClass: "fas fa-plus" }),
+                _vm._v(" Nova função")
+              ]),
+              _vm._v(" "),
+              _c(
+                "el-table",
+                { attrs: { data: _vm.roles } },
+                [
+                  _c("el-table-column", {
+                    attrs: { prop: "display_name", label: "Nome" }
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: { prop: "description", label: "Descrição" }
+                  }),
+                  _vm._v(" "),
+                  _c("el-table-column", {
+                    attrs: { label: "Ações" },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "default",
+                        fn: function(scope) {
+                          return [
+                            _c(
+                              "el-button",
+                              {
+                                attrs: { size: "mini" },
+                                on: {
+                                  click: function($event) {
+                                    _vm.editRole(scope.$index, scope.row)
+                                  }
+                                }
+                              },
+                              [
+                                _c("i", { staticClass: "fas fa-edit" }),
+                                _vm._v(" Editar")
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "el-button",
+                              {
+                                attrs: { size: "mini", type: "danger" },
+                                on: {
+                                  click: function($event) {
+                                    _vm.deleteRole(scope.$index, scope.row)
+                                  }
+                                }
+                              },
+                              [
+                                _c("i", { staticClass: "fas fa-trash" }),
+                                _vm._v(" Excluir")
+                              ]
+                            )
+                          ]
+                        }
+                      }
+                    ])
+                  })
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("el-tab-pane", { attrs: { label: "Notificações" } }, [
+            _vm._v("Notificações...")
+          ]),
+          _vm._v(" "),
+          _c("el-tab-pane", { attrs: { label: "Codigo BNC" } }, [
+            _vm._v("Codigo BNC..")
+          ]),
+          _vm._v(" "),
+          _c("el-tab-pane", { attrs: { label: "Email Marketing" } }, [
+            _vm._v("Email Marketing...")
+          ])
+        ],
+        1
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-4f3d8614", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

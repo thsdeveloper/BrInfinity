@@ -57,9 +57,9 @@
                   Cadastros <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="{{ url('seguradoras') }}"><i class="fas fa-building"></i> Seguradoras</a></li>
-                    <li><a href="{{ url('corretoras') }}"><i class="fas fa-briefcase"></i> Corretoras</a></li>
-                      <li><a href="{{ url('usuarios') }}"><i class="fas fa-users"></i> Usuários</a></li>
+                  <li><a href="{{ url('seguradoras') }}"><i class="fas fa-building"></i> Seguradoras</a></li>
+                  <li><a href="{{ url('corretoras') }}"><i class="fas fa-briefcase"></i> Corretoras</a></li>
+                  <li><a href="{{ url('usuarios') }}"><i class="fas fa-users"></i> Usuários</a></li>
                 </ul>
               </li>
               <li class="dropdown">
@@ -67,9 +67,9 @@
                   Produção <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="{{ url('producao') }}"><i class="far fa-list-alt"></i> Geral</a></li>
-                    <li><a href="{{ url('relatorio') }}"><i class="fas fa-chart-pie"></i> Relatório Anual</a></li>
-                    <li><a href="{{ url('relatorio/mensal') }}"><i class="fas fa-chart-pie"></i> Relatório Mêsal</a></li>
+                  <li><a href="{{ url('producao') }}"><i class="far fa-list-alt"></i> Geral</a></li>
+                  <li><a href="{{ url('relatorio') }}"><i class="fas fa-chart-pie"></i> Relatório Anual</a></li>
+                  <li><a href="{{ url('relatorio/mensal') }}"><i class="fas fa-chart-pie"></i> Relatório Mêsal</a></li>
                 </ul>
               </li>
               <li class="dropdown">
@@ -78,7 +78,7 @@
                 </a>
 
                 <ul class="dropdown-menu">
-                    <li><a href="{{ url('configuracoes') }}"><i class="fas fa-cog"></i> Configurações</a></li>
+                  <li><a href="{{ url('configuracoes') }}"><i class="fas fa-cog"></i> Configurações</a></li>
                   <li>
                     <a href="{{ route('logout') }}"
                     onclick="event.preventDefault();
@@ -102,6 +102,9 @@
       <h2><i class="fas fa-angle-right"></i> @yield('title')</h2>
     </div>
     @yield('content')
+  </div>
+  <div class="container-fluid">
+    @yield('content-fluid')
   </div>
 </div>
 

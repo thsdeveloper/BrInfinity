@@ -15,7 +15,7 @@ class Corretora extends Model{
   }
 
   public function producoes(){
-    return $this->hasMany(Production::class);
+    return $this->hasMany(Intermediation::class);
   }
 
   public function getTotalValor($idCorretora, $idSeguradora){

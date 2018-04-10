@@ -31,6 +31,7 @@ Vue.component('report-table-mensal', require('./components/ReportTableMensal.vue
 Vue.component('table-seguradora', require('./components/TableSeguradora.vue'));
 Vue.component('table-corretora', require('./components/TableCorretora.vue'));
 Vue.component('table-users', require('./components/TableUsers.vue'));
+Vue.component('table-configuracao', require('./components/TableConfiguracao.vue'));
 
 
 
