@@ -16,6 +16,7 @@ Route::get('/', function () {
 });
 
 Route::get('producao', 'ProductionController@showGeral')->middleware('auth');
+Route::post('list/productions/intermediation', 'ProductionController@getProductionIntermidation')->middleware('auth');
 Route::get('producao/{id}', 'ProductionController@show')->middleware('auth');
 Route::get('producao/{id}/periodo/{ano}', 'ProductionController@showData')->middleware('auth');
 Route::get('producao/{id}/periodo/{ano}/{mes}', 'ProductionController@showData')->middleware('auth');
@@ -54,7 +55,14 @@ Route::get('/configuracoes', 'ConfiguracoesController@index');
 Route::get('/user/{id}', 'UserController@getUser');
 Route::get('/usuarios', 'UserController@index');
 
-Route::get('/roles', 'UserController@roles');
+
+Route::get('/roles', 'RoleController@roles');
+Route::post('/role/insert', 'RoleController@insert');
+Route::post('/role/delete', 'RoleController@delete');
+Route::post('/role/update', 'RoleController@update');
+
+Route::get('/relacionar-producao', 'ProductionController@index');
+
 
 Auth::routes();
 

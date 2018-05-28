@@ -6,6 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Intermediation extends Model
 {
+  protected $fillable = [
+    'id',
+    'user_id',
+    'corretora_id',
+    'seguradora_id',
+  ];
+
   public function user(){
     return $this->belongsTo(User::class);
   }

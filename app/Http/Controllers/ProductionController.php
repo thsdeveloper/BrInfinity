@@ -16,6 +16,13 @@ use Carbon\Carbon;
 
 class ProductionController extends Controller
 {
+
+  public function index(){
+    $user = User::get();
+    dd($user);
+    return view('producoes.index', compact('corretoras'));
+  }
+
   /**
   * Show the profile for the given user.
   *
@@ -27,6 +34,7 @@ class ProductionController extends Controller
     $seguradoras = Seguradora::get();
     $corretoras = Corretora::get();
 
+
     $producoes = DB::table('productions')
 
     ->join('intermediations', 'intermediations.id', '=', 'intermediation_id')
@@ -34,15 +42,24 @@ class ProductionController extends Controller
     ->join('corretoras', 'corretoras.id', '=', 'intermediations.corretora_id')
     ->join('seguradoras', 'seguradoras.id', '=', 'intermediations.seguradora_id')
 
-    ->select(DB::raw('users.name as user_name, corretoras.name as corretora_name,  seguradoras.name as seguradora_name, seguradoras.id as seguradora_id, corretoras.id as corretora_id, SUM(valor) as total'))
+    ->select(DB::raw('users.name as user_name, corretoras.name as corretora_name,  seguradoras.name as seguradora_name, seguradoras.id as seguradora_id, corretoras.id as corretora_id, intermediation_id, SUM(valor) as total'))
     ->groupBy(DB::raw('productions.intermediation_id, users.name, corretoras.name, seguradoras.name, seguradoras.id, corretoras.id'))
     ->orderBy(DB::raw('corretoras.name'))
     ->get();
 
 
 
-    return view('producao', compact('corretoras', 'seguradoras', 'producoes'));
+    return view('producoes/producao', compact('corretoras', 'seguradoras', 'producoes'));
   }
+
+
+  public function getProductionIntermidation(Request $request){
+    $id = $request->input('id');
+    $todasProducoes = Production::where('intermediation_id', $id)->get();
+
+    return $todasProducoes;
+  }
+
 
   public function insert(Request $request){
 
@@ -50,11 +67,11 @@ class ProductionController extends Controller
     $date = $request->input('data');
     $value = $request->input('valor');
 
-    $retorno = Productivity::create(
+    $retorno = Production::create(
       [
-        'id_intermediation' => $id,
-        'date' => Carbon::parse($date),
-        'value' => $value,
+        'intermediation_id' => $id,
+        'created_at' => Carbon::parse($date),
+        'valor' => $value,
       ]
     );
 
@@ -62,7 +79,7 @@ class ProductionController extends Controller
   }
 
   public function delete($id){
-    $retorno = Productivity::destroy($id);
+    $retorno = Production::destroy($id);
     return $retorno;
   }
 

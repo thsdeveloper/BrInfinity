@@ -27,9 +27,5 @@ class UserController extends Controller
   public function getUser($id){
     return Auth::user()->name;
   }
-
-  public function roles(){
-    $roles = Role::get();
-    return $roles;
-  }
+  
 }

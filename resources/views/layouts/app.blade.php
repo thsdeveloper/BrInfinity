@@ -14,6 +14,7 @@
 
   <!-- Styles -->
   <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl" crossorigin="anonymous"></script>
 
@@ -68,8 +69,9 @@
                 </a>
                 <ul class="dropdown-menu">
                   <li><a href="{{ url('producao') }}"><i class="far fa-list-alt"></i> Geral</a></li>
+                  <li><a href="{{ url('relacionar-producao') }}"><i class="far fa-list-alt"></i> Relacionar Produção</a></li>
                   <li><a href="{{ url('relatorio') }}"><i class="fas fa-chart-pie"></i> Relatório Anual</a></li>
-                  <li><a href="{{ url('relatorio/mensal') }}"><i class="fas fa-chart-pie"></i> Relatório Mêsal</a></li>
+                  <li><a href="{{ url('relatorio/mensal') }}"><i class="fas fa-chart-pie"></i> Relatório Mensal</a></li>
                 </ul>
               </li>
               <li class="dropdown">

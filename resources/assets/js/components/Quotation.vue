@@ -17,8 +17,18 @@
           <el-row slot="custom-tool-bar" style="margin-bottom: 20px; margin-top: 20px" :gutter="20">
             <el-col :span="6">
               <el-select v-model="customFilters[1].vals" placeholder="Selecione uma data">
-                <el-option v-for="m in this.cotacoes" :key="m.id" :label="m.data_solicitacao | formatDate" :value="m.data_solicitacao">
-                </el-option>
+                <el-option label="Janeiro" value="1"></el-option>
+                <el-option label="Fevereiro" value="2"></el-option>
+                <el-option label="Março" value="3"></el-option>
+                <el-option label="Abril" value="4"></el-option>
+                <el-option label="Maio" value="5"></el-option>
+                <el-option label="Junho" value="6"></el-option>
+                <el-option label="Julho" value="7"></el-option>
+                <el-option label="Agosto" value="8"></el-option>
+                <el-option label="Setembro" value="9"></el-option>
+                <el-option label="Outubro" value="10"></el-option>
+                <el-option label="Novembro" value="11"></el-option>
+                <el-option label="Dezembro" value="12"></el-option>
               </el-select>
             </el-col>
             <el-col :span="14">
@@ -131,7 +141,7 @@
               </el-col>
             </el-row>
 
-            <el-row :gutter="20" v-if="this.lineUpdate === true">
+            <el-row :gutter="20" v-show="ruleForm.negocio == '2'">
               <el-col :span="6">
                 <el-form-item prop="data_validade">
                   <el-date-picker v-model="ruleForm.data_validade" type="date" value-format="yyyy-MM-dd" placeholder="Data da vigência"></el-date-picker>
@@ -182,7 +192,7 @@
             <el-row :gutter="20">
               <el-col :span="24">
                 <el-form-item>
-                  <el-button type="primary" @click="submitForm('ruleForm', lineUpdate)" v-loading.fullscreen.lock="fullscreenLoading" element-loading-text="Aguarde! Estamos atualizando...">Salvar</el-button>
+                  <el-button type="primary" @click="submitForm('ruleForm')" v-loading.fullscreen.lock="fullscreenLoading" element-loading-text="Aguarde! Estamos atualizando...">Salvar</el-button>
                   <el-button @click="resetForm('ruleForm')">Limpar</el-button>
                 </el-form-item>
               </el-col>
@@ -248,7 +258,6 @@ export default {
       //Id da Quotacao
       idQ: '',
       idStatus: '',
-      lineUpdate: false,
 
       //Loading
       fullscreenLoading: false,
@@ -312,11 +321,7 @@ export default {
   },
 
   filters: {
-    formatDate: function (value) {
-      if (value) {
-        return value
-      }
-    }
+
   },
   methods: {
     onFileChange(e) {
@@ -328,7 +333,6 @@ export default {
       this.idQ = row.id;
       this.idStatus = row.status;
 
-      _this.lineUpdate = true;
       _this.dialogCotacao = true;
 
 

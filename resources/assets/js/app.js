@@ -15,6 +15,10 @@ Vue.use(ElementUI, {locale})
 
 import DataTables from 'vue-data-tables'
 Vue.use(DataTables)
+
+import VueMoment from 'vue-moment'
+require('moment/locale/pt')
+Vue.use(VueMoment)
 /**
 * Next, we will create a fresh Vue application instance and attach it to
 * the page. Then, you may begin adding components to this application
