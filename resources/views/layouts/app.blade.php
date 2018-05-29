@@ -69,7 +69,7 @@
                 </a>
                 <ul class="dropdown-menu">
                   <li><a href="{{ url('producao') }}"><i class="far fa-list-alt"></i> Geral</a></li>
-                  <li><a href="{{ url('relacionar-producao') }}"><i class="far fa-list-alt"></i> Relacionar Produção</a></li>
+                  {{-- <li><a href="{{ url('relacionar-producao') }}"><i class="far fa-list-alt"></i> Relacionar Produção</a></li> --}}
                   <li><a href="{{ url('relatorio') }}"><i class="fas fa-chart-pie"></i> Relatório Anual</a></li>
                   <li><a href="{{ url('relatorio/mensal') }}"><i class="fas fa-chart-pie"></i> Relatório Mensal</a></li>
                 </ul>

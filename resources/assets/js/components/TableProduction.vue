@@ -9,7 +9,6 @@
         </template>
       </el-table-column>
 
-
       <el-table-column  :label="s.name" v-for="s in seguradoras" :key="s.id">
         <template slot-scope="scope">
           <div v-for="p in producoes" :key="p.id" v-if="p.seguradora_id === s.id && p.corretora_id === scope.row.id" style="text-align: center">
@@ -20,7 +19,7 @@
 
     </el-table>
 
-    <el-dialog title="Adicionar nova produção" :visible.sync="dialogVisible" width="40%">
+    <el-dialog title="Adicionar nova produção" :visible.sync="dialogVisible" width="50%">
       <el-form :model="ruleForm" :rules="rules" ref="ruleForm" class="demo-ruleForm">
         <el-row :gutter="20">
           <el-col :span="12">
@@ -35,18 +34,18 @@
           </el-col>
           <el-col :span="24">
             <el-table :data="tableData" style="width: 100%">
-              <el-table-column label="Data">
+              <el-table-column label="Data de entrada">
                 <template slot-scope="scope">
                   <span><i class="fas fa-calendar-alt"></i> {{ scope.row.created_at | moment("dddd, D MMMM YYYY")}}</span>
                 </template>
 
               </el-table-column>
-              <el-table-column label="Valor Acumulado">
+              <el-table-column label="Valor Acumulado" width="180">
                 <template slot-scope="scope">
                   <span style="margin-left: 10px">R$ {{ scope.row.valor }}</span>
                 </template>
               </el-table-column>
-              <el-table-column>
+              <el-table-column width="100px">
                 <template slot-scope="scope">
                   <el-tooltip class="item" effect="dark" content="Excluir este item?" placement="top">
                     <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)"><i class="fas fa-trash"></i></el-button>
@@ -127,8 +126,9 @@ export default {
             valor: _this.ruleForm.acumulado,
           })
           .then(function (r) {
+            console.log(r.data.valor);
             _this.loading = false;
-            _this.tableData.push({id: r.id, intermediation_id: r.intermediation_id, valor: r.valor, created_at: r.created_at});
+            _this.tableData.push({id: r.data.id, intermediation_id: r.data.intermediation_id, valor: r.data.valor, created_at: r.data.created_at});
             _this.$message({type: 'success', message: 'Inserido com sucesso!'});
             console.log(r);
           })
@@ -162,6 +162,7 @@ export default {
           console.log(error);
         });
       }).catch(() => {
+        _this.loading = false;
         this.$message({
           type: 'info',
           message: 'Operação cancelada!'
