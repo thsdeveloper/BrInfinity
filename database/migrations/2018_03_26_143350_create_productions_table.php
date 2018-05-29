@@ -19,9 +19,6 @@ class CreateProductionsTable extends Migration
           $table->integer('intermediation_id')->unsigned();
           $table->foreign('intermediation_id')->references('id')->on('intermediations')->onDelete('cascade');
 
-          $table->integer('corretora_id')->unsigned();
-          $table->foreign('corretora_id')->references('id')->on('corretoras')->onDelete('cascade');
-
           $table->string('valor');
 
           $table->timestamps();

@@ -11,6 +11,8 @@ class Production extends Model
     'id',
     'intermediation_id',
     'valor',
+    'created_at',
+    'updated_at'
   ];
 
   public function intermediation(){

@@ -36,7 +36,6 @@ class ProductionController extends Controller
 
 
     $producoes = DB::table('productions')
-
     ->join('intermediations', 'intermediations.id', '=', 'intermediation_id')
     ->join('users', 'users.id', '=', 'intermediations.user_id')
     ->join('corretoras', 'corretoras.id', '=', 'intermediations.corretora_id')

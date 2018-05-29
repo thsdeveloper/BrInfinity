@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Corretora extends Model{
 
   public function seguradoras(){
-    return $this->belongsToMany(Seguradora::class);
+    return $this->BelongsToMany(Seguradora::class, 'intermediations');
   }
 
   public function seguradora(){
