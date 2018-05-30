@@ -47,7 +47,7 @@ class ReportController extends Controller{
 
     }
 
-    dd($intermediations);
+    // dd($intermediations);
 
 
 
