@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use App\User;
 use App\Corretora;
 use App\Seguradora;
@@ -11,7 +12,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
-use DB;
 use Carbon\Carbon;
 
 class ProductionController extends Controller
@@ -66,6 +66,8 @@ class ProductionController extends Controller
     $date = $request->input('data');
     $value = $request->input('valor');
 
+    DB::table('productions')->where(['intermediation_id' => $id, 'valor' => 0])->delete();
+
     $retorno = Production::create(
       [
         'intermediation_id' => $id,
@@ -73,6 +75,8 @@ class ProductionController extends Controller
         'valor' => $value,
       ]
     );
+
+    // dd($retorno);
 
     return $retorno;
   }

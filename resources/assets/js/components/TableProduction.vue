@@ -23,7 +23,7 @@
           <el-input v-model="customFilters[0].vals" placeholder="Digite o nome da corretora"></el-input>
         </el-col>
         <el-col :span="4">
-          <el-button type="success" class="pull-right" @click="dialogCotacao = true"><i class="fas fa-plus"></i> Nova cotação</el-button>
+          <el-button type="success" class="pull-right" @click="dialogProducao = true"><i class="fas fa-plus"></i> Nova produção</el-button>
         </el-col>
       </el-row>
 
@@ -36,7 +36,7 @@
       <el-table-column  :label="s.name" v-for="s in seguradoras" :key="s.id">
         <template slot-scope="scope">
           <div v-for="p in producoes" :key="p.id" v-if="p.seguradora_id === s.id && p.corretora_id === scope.row.id" style="text-align: center">
-            <el-button type="text" @click="addProduction(p)">R$ {{p.total}}</el-button>
+            <el-button type="text" @click="addProduction(p)">{{p.total | real}}</el-button>
           </div>
         </template>
       </el-table-column>
@@ -66,10 +66,11 @@
               </el-table-column>
               <el-table-column label="Valor Acumulado" width="180">
                 <template slot-scope="scope">
-                  <span style="margin-left: 10px">R$ {{ scope.row.valor }}</span>
+                  <span style="margin-left: 10px" v-if="tableData.length > 1">{{ scope.row.valor | real }}</span>
+                  <span style="margin-left: 10px" v-else><el-tag>Entrada inicial {{ scope.row.valor | real}}</el-tag></span>
                 </template>
               </el-table-column>
-              <el-table-column width="100px" v-if="this.tableData.length > 1">
+              <el-table-column width="100px" v-if="tableData.length > 1">
                 <template slot-scope="scope">
                   <el-tooltip class="item" effect="dark" content="Excluir este item?" placement="top">
                     <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)"><i class="fas fa-trash"></i></el-button>
@@ -97,6 +98,7 @@ export default {
   data(){
     return {
       dialogVisible: false,
+      dialogProducao: false,
       idIntermediation: null,
       loading: false,
       tableData: [],
@@ -176,13 +178,12 @@ export default {
     },
     handleDelete(index, row){
       var _this = this;
-      _this.loading = true;
       _this.$confirm('Deseja excluir o registro?', 'Atenção!', {
         confirmButtonText: 'Excluir',
         cancelButtonText: 'Cancelar',
         type: 'warning'
       }).then(() => {
-
+        _this.loading = true;
         axios.post('delete/productivities/'+row.id)
         .then(function (r) {
           _this.loading = false;
@@ -206,6 +207,11 @@ export default {
   mounted() {
     console.log("Componente Table Montado");
   },
+  filters: {
+    real(value) {
+      return  `R$ ${value}`;
+    }
+  },
   computed: {
 
   },
@@ -219,6 +225,6 @@ export default {
   width: 100%;
 }
 .tabel-producao .el-select.selectMold {
-    width: 100%;
+  width: 100%;
 }
 </style>

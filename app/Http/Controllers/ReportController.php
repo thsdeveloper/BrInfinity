@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Productivity;
+use App\Production;
 use App\Intermediation;
 use App\Insurer;
 use App\User;
+use App\Seguradora;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ReportController extends Controller{
@@ -14,161 +15,51 @@ class ReportController extends Controller{
   //Relatorio do sistema
   public function index(){
 
-    $productivity = Productivity::with('intermidations')->whereYear('date', '=', date('Y'))->orderBy('date')->get();
-    $intermediation = Intermediation::with('user', 'insurer')->get(['id', 'id_insurer']);
+    $seguradoras = Seguradora::get();
 
-    $retorno = json_encode(ReportController::getReportYear($productivity, $intermediation));
-    $table = json_encode(ReportController::getReportTable($productivity, $intermediation));
-
-    //dd($retorno);
-
-    return view('report.index', ['retorno' => $retorno, 'table' => $table]);
-  }
+    $productivity = Production::with('intermediation')->whereMonth('created_at', '=', date('m'))->orderBy('created_at')->get();
 
 
-  public function mensal(){
 
-    $productivity = Productivity::with('intermidations.insurer')->orderBy('date')->get();
-    $insurer = Insurer::get();
-
-
-    //var_dump($productivity);
-    return view('report.mensal', ['retorno' => $productivity, 'seguradoras' => $insurer]);
-  }
-
-  static function getReportYear($productivity, $intermediation){
-    $array = array();
-    $meses = array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
-    $total = 0;
-    $retorno = array();
     $retornoArray = array();
-    $RecebeValor = array();
-
-    foreach ($intermediation as $keyInter => $inter) {
+    foreach ($seguradoras as $key => $seg) {
 
 
-      foreach ($productivity as $key => $value) {
-        if($value->id_intermediation === $inter->id){
-          $data = $value->date;
-          $valor = $value->value;
+      $dados = array(
+        'seguradora'=> $seg->name,
+        'janeiro' => "R$ 10",
+        'fevereiro' => 'R$ 10',
+        'marco' => "R$ 10",
+        'abril' => 'R$ 10',
+        'maio' => "R$ 10",
+        'junho' => 'R$ 10',
+        'julho' => "R$ 10",
+        'agosto' => 'R$ 10',
+        'setembro' => "R$ 10",
+        'outubro' => 'R$ 10',
+        'novembro' => "R$ 10",
+        'dezembro' => 'R$ 10',
+        'total' => '900'
+      );
 
-          $dataMes = date("F", strtotime($data));
+      array_push($retornoArray, $dados);
+      $intermediations = Intermediation::where('seguradora_id', $seg->id)->get();
 
-          if(!array_key_exists($inter->insurer->name, $array)){
-            $array[$inter->insurer->name] = array();
-          }
-
-          if(!array_key_exists($dataMes, $array[$inter->insurer->name])){
-
-            foreach ($meses as $key => $m) {
-              $array[$inter->insurer->name][$m] = 0;
-            }
-
-          }
-
-          //$total = $total + $valor;
-          $array[$inter->insurer->name][$dataMes] = $array[$inter->insurer->name][$dataMes] + $value->value;
-        }
-      }
-      //  array_push($array, array($total, $inter->insurer->name));
-      //  $total = 0;
     }
 
+    dd($intermediations);
 
 
-    foreach ($array as $key => $insurer) {
-      $totalGeral  = 0;
 
-      $insurerValores = array();
-
-      foreach ($insurer as $k => $v) {
-        $totalGeral = $totalGeral+$v;
-        array_push($insurerValores, $v);
-      }
-
-      $RecebeValor['total'] = $totalGeral;
-      $RecebeValor['seguradora'] = $key;
-      $RecebeValor['valores'] = $insurerValores;
-
-      //$retorno = array($insurer, $key);
-
-      array_push($retornoArray, $RecebeValor);
-    }
-
-    return $retornoArray;
-
-  }
-
-  static function getReportTable($productivity, $intermediation){
-    $array = array();
-    $meses = array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
-    $total = 0;
-    $retorno = array();
-    $retornoArray = array();
-
-    foreach ($intermediation as $keyInter => $inter) {
-
-
-      foreach ($productivity as $key => $value) {
-        if($value->id_intermediation === $inter->id){
-          $data = $value->date;
-          $valor = $value->value;
-
-          $dataMes = date("F", strtotime($data));
-
-          if(!array_key_exists($inter->insurer->name, $array)){
-            $array[$inter->insurer->name] = array();
-          }
-
-          if(!array_key_exists($dataMes, $array[$inter->insurer->name])){
-
-            foreach ($meses as $key => $m) {
-              $array[$inter->insurer->name][$m] = 0;
-            }
-
-          }
-
-          //$total = $total + $valor;
-          $array[$inter->insurer->name][$dataMes] = $array[$inter->insurer->name][$dataMes] + $value->value;
-        }
-      }
-      //  array_push($array, array($total, $inter->insurer->name));
-      //  $total = 0;
-    }
-
-
-    foreach ($array as $key => $insurer) {
-      $totalGeral  = 0;
-
-      foreach ($insurer as $k => $v) {
-        $totalGeral = $totalGeral+$v;
-      }
-
-      $insurer['total'] = $totalGeral;
-      $insurer['seguradora'] = $key;
-      $insurer['valores'] = array();
-      //$retorno = array($insurer, $key);
-
-      array_push($retornoArray, $insurer);
-    }
-
-    return $retornoArray;
-
-  }
-
-  public function showData($id, $ano){
-
-    $productivity = Productivity::with('intermidations')->whereYear('date', '=', $ano)->orderBy('date')->get();
-
-    return $productivity;
+    // $intermediation = Intermediation::with('user', 'seguradora')->get(['id', 'seguradora_id']);
+    // compact('dados')
+    return view('report.index');
   }
 
 
   public function downloadExcel($type){
-    //$data = User::get()->toArray();
 
-    $data = Productivity::get()->toArray();
-    //$insurer = Insurer::get()->toArray();
+    $data = Production::get()->toArray();
 
 
     return Excel::create('relatorio', function($excel) use ($data) {
@@ -182,7 +73,7 @@ class ReportController extends Controller{
   public function downloadAnual($type){
     //$data = User::get()->toArray();
 
-    $data = Productivity::get()->toArray();
+    $data = Production::get()->toArray();
     //$insurer = Insurer::get()->toArray();
 
     return Excel::create('relatorio', function($excel) use ($data) {

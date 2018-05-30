@@ -10,6 +10,7 @@ require('./bootstrap');
 window.Vue = require('vue');
 
 import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css';
 import locale from 'element-ui/lib/locale/lang/pt-br'
 Vue.use(ElementUI, {locale})
 
@@ -19,6 +20,9 @@ Vue.use(DataTables)
 import VueMoment from 'vue-moment'
 require('moment/locale/pt')
 Vue.use(VueMoment)
+
+import VueTheMask from 'vue-the-mask'
+Vue.use(VueTheMask)
 /**
 * Next, we will create a fresh Vue application instance and attach it to
 * the page. Then, you may begin adding components to this application
@@ -29,9 +33,9 @@ Vue.component('example-component', require('./components/ExampleComponent.vue'))
 Vue.component('table-production', require('./components/TableProduction.vue'));
 
 Vue.component('quotation-brinfinty', require('./components/Quotation.vue'));
-Vue.component('report-brinfinty', require('./components/Report.vue'));
-Vue.component('report-table', require('./components/ReportTable.vue'));
-Vue.component('report-table-mensal', require('./components/ReportTableMensal.vue'));
+
+Vue.component('relatorio-anual', require('./components/RelatorioAnual.vue'));
+
 Vue.component('table-seguradora', require('./components/TableSeguradora.vue'));
 Vue.component('table-corretora', require('./components/TableCorretora.vue'));
 Vue.component('table-users', require('./components/TableUsers.vue'));
