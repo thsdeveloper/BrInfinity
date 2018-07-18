@@ -23,6 +23,13 @@ Vue.use(VueMoment)
 
 import VueTheMask from 'vue-the-mask'
 Vue.use(VueTheMask)
+
+
+// chartjs package
+require('chart.js');
+// vue-charts package
+require('hchs-vue-charts');
+Vue.use(VueCharts);
 /**
 * Next, we will create a fresh Vue application instance and attach it to
 * the page. Then, you may begin adding components to this application
@@ -35,6 +42,7 @@ Vue.component('table-production', require('./components/TableProduction.vue'));
 Vue.component('quotation-brinfinty', require('./components/Quotation.vue'));
 
 Vue.component('relatorio-anual', require('./components/RelatorioAnual.vue'));
+Vue.component('relatorio-mensal', require('./components/RelatorioMensal.vue'));
 
 Vue.component('table-seguradora', require('./components/TableSeguradora.vue'));
 Vue.component('table-corretora', require('./components/TableCorretora.vue'));

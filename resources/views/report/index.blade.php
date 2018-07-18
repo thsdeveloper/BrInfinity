@@ -3,7 +3,7 @@
 @section('content-fluid')
   <div class="row">
     <div class="col-md-12">
-      <relatorio-anual></relatorio-anual>
+      <relatorio-anual :table="{{$table}}"></relatorio-anual>
     </div>
   </div>
 @endsection

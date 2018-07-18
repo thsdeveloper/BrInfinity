@@ -11,6 +11,4 @@ class Seguradora extends Model
     return $this->belongsToMany(Production::class);
   }
 
-
-
 }

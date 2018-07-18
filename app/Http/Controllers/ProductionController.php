@@ -7,6 +7,7 @@ use App\User;
 use App\Corretora;
 use App\Seguradora;
 use App\Production;
+use App\AnnualReport;
 use App\Intermediation;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -45,9 +46,6 @@ class ProductionController extends Controller
     ->groupBy(DB::raw('productions.intermediation_id, users.name, corretoras.name, seguradoras.name, seguradoras.id, corretoras.id'))
     ->orderBy(DB::raw('corretoras.name'))
     ->get();
-
-
-
     return view('producoes/producao', compact('corretoras', 'seguradoras', 'producoes'));
   }
 
@@ -55,7 +53,6 @@ class ProductionController extends Controller
   public function getProductionIntermidation(Request $request){
     $id = $request->input('id');
     $todasProducoes = Production::where('intermediation_id', $id)->get();
-
     return $todasProducoes;
   }
 
@@ -75,9 +72,7 @@ class ProductionController extends Controller
         'valor' => $value,
       ]
     );
-
-    // dd($retorno);
-
+    
     return $retorno;
   }
 
